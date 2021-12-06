@@ -61,3 +61,23 @@ def open_connection(db_name):
     ```
     <span style="color: red">Warning: Not closing the database connection will cause many problems!</span>
 - - -
+## <span style="color: red">***Global Warnings:***</span>
+1. Every One <span style="color: red">***must***</span> have his own branch on the repository.
+2. <span style="color: red">***No one is allowed***</span> to push his changes direct on master branch.
+3. Make sure before you make any changes on your local that:<br>
+    I. You working on your local branch not on local master.
+    II. Your local master is up to date with the global master.
+    ```
+    git checkout master
+    git pull
+    ```
+    III. Your local branch is merged by the up to dated local master.
+    ```
+    git checkout <your branch's name>
+    git merge
+    ```
+    IV. Don't forget to return to your branch
+    ```
+    git checkout <your branch's name>
+    ```
+- - -
