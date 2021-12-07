@@ -74,7 +74,7 @@ def open_connection(db_name):
     III. Your local branch is merged by the up to dated local master.
     ```
     git checkout <your branch's name>
-    git merge
+    git merge master
     ```
     IV. Don't forget to return to your branch
     ```
