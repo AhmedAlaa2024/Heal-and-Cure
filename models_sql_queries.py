@@ -3,8 +3,8 @@ conn = sqlite3.connect('test.db')
 #creat the tables
 #department table
 conn.execute('''CREATE TABLE Department
-         (ID INT PRIMARY KEY     NOT NULL,
-         NAME           CHAR(50)  UNIQE   NOT NULL,
+         (ID INT PRIMARY KEY     NOT NULL AUTOINCREMENT,
+         FNAME           CHAR(50)  NOT NULL,
          lNAME          CHAR(50)     NOT NULL,
          Manager_id     INT,
          Start_Date     TEXT         NOT NULL,
@@ -14,34 +14,34 @@ conn.execute('''CREATE TABLE Department
          );''')
 #patient table
 conn.execute('''CREATE TABLE Patient
-         (ID INT PRIMARY KEY     NOT NULL,
+         (ID INT PRIMARY KEY     NOT NULL AUTOINCREMENT,
          FNAME          CHAR(50)     NOT NULL,
          lNAME          CHAR(50)     NOT NULL,
          AGE            INT     NOT NULL,
-         Pcountry       CHAR(50)  NOT NULL,
-         Pcity          CHAR(50)  NOT NULL,
-         PNumber        CHAR(50)  NOT NULL,
-         Dcountry       CHAR(50)  NOT NULL,
-         Dcity          CHAR(50)  NOT NULL,
-         Dstreet        CHAR(50)  NOT NULL,
+         Phonecountry       CHAR(50)  NOT NULL,
+         Phonecity          CHAR(50)  NOT NULL,
+         PhoneNumber        CHAR(50)  NOT NULL,
+         Addresscountry       CHAR(50)  NOT NULL,
+         Addresscity          CHAR(50)  NOT NULL,
+         Addressstreet        CHAR(50)  NOT NULL,
          GENDER         CHAR(1)   NOT NULL,
-         Email          CHAR(50)  NOT NULL,
+         Email          CHAR(50)  NOT NULL UNIQUE,
          Password       CHAR(50)  NOT NULL);''')
 #employee table
 conn.execute('''CREATE TABLE Employee
-         (ID INT PRIMARY KEY     NOT NULL,
+         (ID INT PRIMARY KEY     NOT NULL AUTOINCREMENT,
          FNAME          CHAR(50)     NOT NULL,
          lNAME          CHAR(50)     NOT NULL,
          AGE            INT     NOT NULL,
-         Pcountry       CHAR(50)  NOT NULL,
-         Pcity          CHAR(50)  NOT NULL,
-         PNumber        CHAR(50)  NOT NULL,
-         Dcountry       CHAR(50)  NOT NULL,
-         Dcity          CHAR(50)  NOT NULL,
-         Dstreet        CHAR(50)  NOT NULL,
+         Phonecountry       CHAR(50)  NOT NULL,
+         Phonecity          CHAR(50)  NOT NULL,
+         PhoneNumber        CHAR(50)  NOT NULL,
+         Addresscountry       CHAR(50)  NOT NULL,
+         Addresscity          CHAR(50)  NOT NULL,
+         Addressstreet        CHAR(50)  NOT NULL,
          GENDER         CHAR(1)   NOT NULL,
-         Email          CHAR(50)  NOT NULL,
-         Password       CHAR(50)  NOT NULL,
+         Email          CHAR(50)  NOT NULL UNIQUE,
+         Password       CHAR(50)  NOT NULL ,
          JoinDate       TEXT      NOT NULL,
          D_id           INT,
          CONSTRAINT emp&Dep
@@ -52,7 +52,7 @@ conn.execute('''CREATE TABLE Employee
 # prescription table
 # there are two relationships (employee,patient)
 conn.execute('''CREATE TABLE Prescription
-         (ID INT PRIMARY KEY     NOT NULL,
+         (ID INT PRIMARY KEY     NOT NULL AUTOINCREMENT,
          DATE           TEXT     NOT NULL,
          Illness        CHAR(50)     NOT NULL,
          Treatment      TEXT     NOT NULL,
@@ -68,7 +68,7 @@ conn.execute('''CREATE TABLE Prescription
 #reservation table
 # there are three relationships (prescription,patient,room)
 conn.execute('''CREATE TABLE Reservation
-         (ID INT PRIMARY KEY     NOT NULL,
+         (ID INT PRIMARY KEY     NOT NULL AUTOINCREMENT,
          DATE           TEXT     NOT NULL,
          Appointment    TEXT     NOT NULL,
          state          CHAR(1)  NOT NULL,
@@ -87,34 +87,34 @@ conn.execute('''CREATE TABLE Reservation
          REFERENCES Room (ID),
          );''')
 # contracts tables(global)
-conn.execute('''CREATE TABLE GContract
-         (ID INT PRIMARY KEY     NOT NULL,
+conn.execute('''CREATE TABLE GlobalContract
+         (ID INT PRIMARY KEY     NOT NULL AUTOINCREMENT ,
          Terms    TEXT           NOT NULL,
          Penalty  TEXT           NOT NULL
          );''')
-conn.execute('''CREATE TABLE EContract
-         (ID INT NOT NULL,
+conn.execute('''CREATE TABLE EmployeeContract
+         (ID INT NOT NULL AUTOINCREMENT,
          E_ID INT  ,
-         C_ID INT ,
-         PRIMARY KEY(ID,E_ID,C_ID),
+         GlobalContract_ID INT ,
+         PRIMARY KEY(ID,E_ID, GlobalContract_ID ),
          CONSTRAINT E&C
          FOREIGN KEY (E_ID)
          REFERENCES Employee (ID),
          CONSTRAINT GC&C
-         FOREIGN KEY (C_ID)
+         FOREIGN KEY ( GlobalContract_ID )
          REFERENCES GContract (ID)
          );''')
-conn.execute('''CREATE TABLE PContract
+conn.execute('''CREATE TABLE PatientContract
          (P_ID INT ,
          Doc_ID INT  ,
-         C_ID INT ,
+         GlobalContract_ID  INT ,
          OP_ID INT,
-         PRIMARY KEY(P_ID,E_ID,C_ID,OP_ID),
+         PRIMARY KEY(P_ID,E_ID, GlobalContract_ID ,OP_ID),
          CONSTRAINT E&C
          FOREIGN KEY (Doc_ID)
          REFERENCES Employee (ID),
          CONSTRAINT GC&C
-         FOREIGN KEY (C_ID)
+         FOREIGN KEY ( GlobalContract_ID )
          REFERENCES GContract (ID),
          CONSTRAINT P&C
          FOREIGN KEY (P_ID)
@@ -128,7 +128,7 @@ conn.execute('''CREATE TABLE Room
          (ID INT PRIMARY KEY NOT NULL,
          LastStay TEXT    ,
          Avaliable CHAR(1) ,
-         DE_ID  INT,
+         Department_ID  INT,
          CONSTRAINT D&R
          FOREIGN KEY (DE_ID)
          REFERENCES Department (ID)
