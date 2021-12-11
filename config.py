@@ -1,4 +1,6 @@
 import sqlite3
+from sqlite3.dbapi2 import Cursor
+from models.models_sql_queries import *
 ################################## DB Connection Configurations ####################################
 
 #===================================================================================================
@@ -35,3 +37,7 @@ def close_connection(connection):
     connection.commit()
     connection.close()
 ####################################################################################################
+
+def Database_Setup(cursor):
+    for table in HOSPITAL_DB_TABLES:
+        cursor.execute(table)
