@@ -1,27 +1,7 @@
 from ..app import cursor
 
-class Employee():
-    def __init__(self, fname, lname, age, country, city, number, ):
-        self.fname = fname
-        self.lname = lname
-        self.age = age
-        self.country = country
-        self.city = city
 
-    def get():
-        pass
-
-    def insert():
-        pass
-
-    def update():
-        pass
-
-    def delete():
-        pass
-
-
-class Patient():
+class Prescription():
     def __init__(self):
         pass
 
@@ -38,7 +18,58 @@ class Patient():
         pass
 
 
-class Donor():
+class Reservation():
+    def __init__(self):
+        pass
+
+    def get():
+        pass
+
+    def insert():
+        pass
+
+    def update():
+        pass
+
+    def delete():
+        pass
+
+
+class Operation():
+    def __init__(self):
+        pass
+
+    def get():
+        pass
+
+    def insert():
+        pass
+
+    def update():
+        pass
+
+    def delete():
+        pass
+
+
+class Examination():
+    def __init__(self):
+        pass
+
+    def get():
+        pass
+
+    def insert():
+        pass
+
+    def update():
+        pass
+
+    def delete():
+        pass
+
+
+class Donation():
     def __init__(self):
         pass
 
