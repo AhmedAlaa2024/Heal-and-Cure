@@ -133,4 +133,12 @@ conn.execute('''CREATE TABLE Room
          FOREIGN KEY (DE_ID)
          REFERENCES Department (ID)
          );''')
-
+#Examination
+conn.execute('''
+             CREATE TABLE EXAMINATION
+             (
+               ID INT PRIMARY KEY NOT NULL,
+               DATE VARCHAR(18) DEFAULT='00:00AM,00/00/0000',
+               RESULT VARCHAR(150)
+             )
+             ''')
