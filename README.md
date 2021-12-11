@@ -59,7 +59,7 @@ def open_connection(db_name):
     ```
     close_connection(connection)
     ```
-    <span style="color: red">Warning: Not closing the database connection will cause many problems!</span>
+    <span style="color: red">Warning: Not closing the database connection will cause many unexpected problems!</span>
 - - -
 ## <span style="color: red">***Global Warnings:***</span>
 1. Every One <span style="color: red">***must***</span> have his own branch on the repository.
