@@ -2,6 +2,7 @@
 
 class Employee():
     def __init__(self, cursor, fname, lname, age, phoneCountry, phoneCity, phoneNumber, addressCountry, addressCity, addressStreet, gender, email, password, join_date, department_id, group_id):
+        self.id = None
         self.cursor = cursor
         self.fname = fname
         self.lname = lname
@@ -18,6 +19,26 @@ class Employee():
         self.join_date = join_date
         self.department_id = department_id
         self.group_id = group_id
+
+
+    def __init__(self, cursor):
+        self.id = None
+        self.cursor = cursor
+        self.fname = None
+        self.lname = None
+        self.age = None
+        self.phoneCountry = None
+        self.phoneCity = None
+        self.phoneNumber = None
+        self.addressCountry = None
+        self.addressCity = None
+        self.addressStreet = None
+        self.gender = None
+        self.email = None
+        self.__password = None
+        self.join_date = None
+        self.department_id = None
+        self.group_id = None
 
 
     def get():
