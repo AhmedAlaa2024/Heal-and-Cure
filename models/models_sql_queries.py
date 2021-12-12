@@ -120,13 +120,63 @@ Room_TABLE = '''CREATE TABLE IF NOT EXISTS Room
          CONSTRAINT Department_Room FOREIGN KEY (Department_ID) REFERENCES Department (ID)
          )'''
 #Examination
+# the validity will be discussed
 Examination_TABLE = '''CREATE TABLE IF NOT EXISTS Examination
              (
                ID INTEGER PRIMARY KEY AUTOINCREMENT,
-               DATE VARCHAR(18) DEFAULT '00:00AM,00/00/0000',
-               RESULT VARCHAR(150)
+               ExaminationDate VARCHAR(18) DEFAULT '00:00AM,00/00/0000',
+               Result VARCHAR(100) NOT NULL,
+               Validity  VARCHAR() ,
+               ReservationId  INT ,
+               PatientId      INT,
+               DepartmentId   INT,
+               CONSTRAINT RESERVATION_REL FOREIGN KEY (ReservationId) REFERENCES Reservation (ID),
+               CONSTRAINT PATIENT_REL FOREIGN KEY (PatientId) REFERENCES Patient (ID),
+               CONSTRAINT DEPARTMENT_REL FOREIGN KEY (DepartmentId) REFERENCES Department (ID),
              )
              '''
-
-
+#Examination&operation
+Examination_Operation_Table='''CREATE TABLE IF NOT EXISTS ExaminationAndOperation
+              (
+              Ex_ID   INT  ,
+              OP_ID   INT  ,
+              PRIMARY KEY(Ex_ID,OP_ID),
+              CONSTRAINT OPERATION_REL FOREIGN KEY (OP_ID) REFERENCES Operation (ID),
+              CONSTRAINT EXAMINATION_REL FOREIGN KEY (Ex_ID) REFERENCES Examination (ID)
+              )
+              '''
+# OPERTAION TABLE
+OPERATION_Teble='''CREATE TABLE IF NOT EXISTS Operation
+(
+  ID INT PRIMARY KEY AUTOINCREMENT,
+  STATE  CHAR(1)  NOT NULL,
+  STARTTIME  VARCHAR(18) DEFAULT '00:00AM,00/00/0000',
+  STARTTIME  VARCHAR(18) DEFAULT '00:00AM,00/00/0000',
+  Priority    VARCHAR(1)       NOT NULL,
+  Prequistes  VARCHAR(150)    , 
+  RESERVATION_ID     INT  ,
+  CONSTRAINT RESERVATION_OPERATION FOREIGN KEY (RESERVATION_ID) REFERENCES Reservation (ID)
+)
+'''
+# DONER TABLE
+DONER_Table='''CREATE TABLE IF NOT EXISTS Doner
+(
+  ID INT PRIMARY KEY  AUTOINCREMENT,
+  BloodType  CHAR(2)  NOT NULL,
+  FNAME          CHAR(50)     NOT NULL,
+  lNAME          CHAR(50)     NOT NULL,
+  Addresscountry       CHAR(50)  NOT NULL,
+  Addresscity          CHAR(50)  NOT NULL,
+  Addressstreet        CHAR(50)  NOT NULL,
+)
+'''
+DONATION_TABLE ='''CREATE TABLE IF NOT EXISTS Donation
+(
+  ID INT PRIMARY KEY  AUTOINCREMENT,
+  DonationDate  VARCHAR(18) DEFAULT '00:00AM,00/00/0000',
+  DonationType  VARCHAR(50) NOT NULL ,
+  DonarId int ,
+  CONSTRAINT DONATION_DONAR FOREIGN KEY (DonarId) REFERENCES Doner (ID)
+)
+'''
 HOSPITAL_DB_TABLES = [Department_TABLE, Patient_TABLE, Employee_TABLE, Prescription_TABLE, Reservation_TABLE, GlobalContract_TABLE, EmployeeContract_TABLE, PatientContract_TABLE, Room_TABLE, Examination_TABLE]
