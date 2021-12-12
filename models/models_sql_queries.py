@@ -1,6 +1,6 @@
 #department table
 Department_TABLE = '''CREATE TABLE IF NOT EXISTS Department
-         (ID INTEGER PRIMARY KEY     AUTOINCREMENT,
+         (ID INTEGER PRIMARY KEY     AUTOINCREMENT NOT NULL,
          FNAME           CHAR(50)  NOT NULL,
          lNAME          CHAR(50)     NOT NULL,
          Manager_id     INT,
@@ -11,7 +11,7 @@ Department_TABLE = '''CREATE TABLE IF NOT EXISTS Department
          )'''
 #patient table
 Patient_TABLE = '''CREATE TABLE IF NOT EXISTS Patient
-         (ID INTEGER PRIMARY KEY     AUTOINCREMENT,
+         (ID INTEGER PRIMARY KEY     AUTOINCREMENT NOT NULL,
          FNAME          CHAR(50)     NOT NULL,
          lNAME          CHAR(50)     NOT NULL,
          AGE            INT     NOT NULL,
@@ -26,7 +26,7 @@ Patient_TABLE = '''CREATE TABLE IF NOT EXISTS Patient
          Password       CHAR(50)  NOT NULL)'''
 #employee table
 Employee_TABLE = '''CREATE TABLE IF NOT EXISTS Employee
-         (ID INTEGER PRIMARY KEY     AUTOINCREMENT,
+         (ID INTEGER PRIMARY KEY     AUTOINCREMENT NOT NULL,
          FNAME          CHAR(50)     NOT NULL,
          lNAME          CHAR(50)     NOT NULL,
          AGE            INT     NOT NULL,
@@ -47,7 +47,7 @@ Employee_TABLE = '''CREATE TABLE IF NOT EXISTS Employee
 # prescription table
 # there are two relationships (employee,patient)
 Prescription_TABLE = '''CREATE TABLE IF NOT EXISTS Prescription
-         (ID INTEGER PRIMARY KEY     AUTOINCREMENT,
+         (ID INTEGER PRIMARY KEY     AUTOINCREMENT NOT NULL,
          DATE           VARCHAR(18) DEFAULT '00:00AM,00/00/0000',
          Illness        CHAR(50)     NOT NULL,
          Treatment      TEXT     NOT NULL,
@@ -62,7 +62,7 @@ Prescription_TABLE = '''CREATE TABLE IF NOT EXISTS Prescription
 #reservation table
 # there are three relationships (prescription,patient,room)
 Reservation_TABLE = '''CREATE TABLE IF NOT EXISTS Reservation
-         (ID INTEGER PRIMARY KEY     AUTOINCREMENT,
+         (ID INTEGER PRIMARY KEY     AUTOINCREMENT NOT NULL,
          DATE           VARCHAR(18) DEFAULT '00:00AM,00/00/0000',
          Appointment    TEXT     NOT NULL,
          state          CHAR(1)  NOT NULL,
@@ -82,7 +82,7 @@ Reservation_TABLE = '''CREATE TABLE IF NOT EXISTS Reservation
          )'''
 # contracts tables(global)
 GlobalContract_TABLE = '''CREATE TABLE IF NOT EXISTS GlobalContract
-         (ID INTEGER PRIMARY KEY     AUTOINCREMENT,
+         (ID INTEGER PRIMARY KEY     AUTOINCREMENT NOT NULL,
          Terms    TEXT           NOT NULL,
          Penalty  TEXT           NOT NULL
          )'''
@@ -113,7 +113,7 @@ PatientContract_TABLE = '''CREATE TABLE IF NOT EXISTS PatientContract
          )'''
 #room
 Room_TABLE = '''CREATE TABLE IF NOT EXISTS Room
-         (ID INTEGER PRIMARY KEY AUTOINCREMENT,
+         (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
          LastStay VARCHAR(18) DEFAULT '00:00AM,00/00/0000',
          Avaliable CHAR(1),
          Department_ID  INT,
@@ -122,7 +122,7 @@ Room_TABLE = '''CREATE TABLE IF NOT EXISTS Room
 #Examination
 Examination_TABLE = '''CREATE TABLE IF NOT EXISTS Examination
              (
-               ID INTEGER PRIMARY KEY AUTOINCREMENT,
+               ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                DATE VARCHAR(18) DEFAULT '00:00AM,00/00/0000',
                RESULT VARCHAR(150)
              )
