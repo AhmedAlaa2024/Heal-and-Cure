@@ -8,7 +8,7 @@ Patient_attributes = {0:"*",1:"ID",2:"FNAME",3:"lNAME",4:"AGE",5:"Phonecountry"
 ,6:"PhoneNumber",7:"Addresscountry",8:"Addresscity",9:"Addressstreet",10:"GENDER",11:"Email",12:"Password"}
 Employee_attributes ={0:"*",1:"ID",2:"FNAME",3:"lNAME",4:"AGE",5:"Phonecountry"
 ,6:"PhoneNumber",7:"Addresscountry",8:"Addresscity",9:"Addressstreet",10:"GENDER",11:"Email",12:"Password",13:"JoinDate",14:"D_id",15:"Group_id"}
-Prescription_attributes = {0:"*",1:"ID",2:"Illness",3:"Treatment",4:"Doc_id",5:"Patient_id"}
+Prescription_attributes = {0:"*",1:"ID",2:"DATE",3:"Illness",4:"Treatment",5:"Doc_id",6:"Patient_id"}
 GlobalContract_attributes = {0:"*",1:"ID",2:"Terms",3:"Penalty"}
 EmployeeContract_attributes = {0:"*",1:"ID",2:"E_ID",3:"GlobalContract_ID"}
 PatientContract_attributes = {0:"*",1:"P_ID",2:"E_ID",3:"Doc_ID",4:"GlobalContract_ID",5:"OP_ID"}
@@ -156,3 +156,69 @@ def insert_general(cursor,table_name ,table_attributes,Columns,Values):
         Q2 +=''','''+'''?'''
     query = '''INSERT INTO '''+table_name+ Q1+''' VALUES(''' + Q2 +''')'''
     cursor.execute(query,Values)
+
+# ------------------------- Prescription --------------------------------------
+# 1] Retreive From Prescription according to Patient & his Email {Can be General not only Email}
+# Before insertion  we must Check Doc_ID is for Doctor Group_ID = 'D'
+
+def SelecT_ALL_Prescription_Patient(cursor,Email):
+
+    #query = '''Select * from Prescription Ps,Patient P where Ps.Patient_id = P.ID And P.Email='''+"'"+Email+"'"
+    #cursor.execute(query)
+    query = '''Select * from Prescription Ps,Patient P where Ps.Patient_id = P.ID And P.Email=?;'''
+    cursor.execute(query,[Email])
+    result = cursor.fetchall()
+    print (result)
+    return result
+
+def Select_From_Prescription_Patient(cursor,Email,Columns = []):
+
+    Q1 = ''''''
+    if (len(Columns) > 0):
+        Q1 += Prescription_attributes[Columns[0]]
+        for i in range(1,len(Columns)):
+            Q1 += ''','''
+            Q1 += Prescription_attributes[Columns[i]]
+    else:
+        Q1 += Prescription_attributes[2]
+        for i in range(3,len(Prescription_attributes)):
+            Q1 += ''','''
+            Q1 += Prescription_attributes[i]
+    query = '''Select '''+Q1+''' from Prescription Ps,Patient P where Ps.Patient_id = P.ID And P.Email='''+"'"+Email+"';"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    print (result)
+    return result
+
+# 2] Retreive From Prescription according to doctor & his Email
+
+def SelecT_ALL_Prescription_Employee(cursor,Email):
+
+    #query = '''Select * from Prescription Ps,Employee E where Ps.Doc_id = E.ID And E.Email='''+"'"+Email+"'"
+    #cursor.execute(query)
+    query = '''Select * from Prescription Ps,Employee E where Ps.Doc_id = E.ID And E.Email=?;'''
+    cursor.execute(query,[Email])
+    result = cursor.fetchall()
+    print (result)
+    return result
+
+def Select_From_Prescription_Employee(cursor,Email,Columns = []):
+
+    Q1 = ''''''
+    if (len(Columns) > 0):
+        Q1 += Prescription_attributes[Columns[0]]
+        for i in range(1,len(Columns)):
+            Q1 += ''','''
+            Q1 += Prescription_attributes[Columns[i]]
+    else:
+        Q1 += Prescription_attributes[2]
+        for i in range(3,len(Prescription_attributes)):
+            Q1 += ''','''
+            Q1 += Prescription_attributes[i]
+    #query = '''Select '''+Q1+''' from Prescription Ps,Employee E where Ps.Doc_id = E.ID And E.Email='''+"'"+Email+"'"
+    #cursor.execute(query)
+    query = '''Select '''+Q1+''' from Prescription Ps,Employee E where Ps.Doc_id = E.ID And E.Email=?'''
+    cursor.execute(query,[Email])
+    result = cursor.fetchall()
+    print (result)
+    return result
