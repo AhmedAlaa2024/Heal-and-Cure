@@ -11,7 +11,7 @@ from Models.models_sql_queries import *
 # Description: Open connection with the required database
 #===================================================================================================
 def open_connection(db_name):
-    connection = sqlite3.connect(db_name)
+    connection = sqlite3.connect(db_name , check_same_thread=False)
     return connection
 
 #===================================================================================================

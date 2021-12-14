@@ -7,14 +7,13 @@ from profile import ProfilePage
 from werkzeug.utils import redirect
 from utils import *
 from config import *
-SECRET_KEY=os.urandom(32)
 connection = open_connection("hospital.db")
 cursor = get_cursor(connection)
 
 Database_Setup(cursor)
 
 app=Flask(__name__)
-
+app.secret_key=os.urandom(32)
 # The bluePrint to help us to connect the files  
 app.register_blueprint(HomePage)
 app.register_blueprint(LoginPage)

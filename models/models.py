@@ -111,11 +111,11 @@ def selectFromTable(cursor,table_name,table_attributes,Columns,Selectors):
     else:
         for i in range(len(Selectors)-1):
             if(isinstance(Selectors[i][1], int)):
-                Q2 += table_attributes[Selectors[i][0]] + "="+Selectors[i][1]+" AND "
+                Q2 += table_attributes[Selectors[i][0]] + "="+str(Selectors[i][1])+" AND "
             else:
                  Q2 += table_attributes[Selectors[i][0]] + "='"+Selectors[i][1]+"' AND "
-        if(isinstance(Selectors[i][-1], int)):
-            Q2 += table_attributes[Selectors[-1][0]] + "="+ Selectors[-1][1]
+        if(isinstance(Selectors[-1][-1], int)):
+            Q2 += table_attributes[Selectors[-1][0]] + "="+ str(Selectors[-1][1])
         else:
             Q2 += table_attributes[Selectors[-1][0]] + "='"+ Selectors[-1][1]+"'"
 
