@@ -1,6 +1,6 @@
 import sqlite3
 from sqlite3.dbapi2 import Cursor
-from Models.models_sql_queries import *
+from models.models_sql_queries import *
 ################################## DB Connection Configurations ####################################
 
 #===================================================================================================

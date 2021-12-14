@@ -1,5 +1,6 @@
 from config import *
 from utils import *
+from sqlite3 import Error
 import enum
 # Dictionaries
 
@@ -120,9 +121,12 @@ def selectFromTable(cursor,table_name,table_attributes,Columns,Selectors):
             Q2 += table_attributes[Selectors[-1][0]] + "='"+ Selectors[-1][1]+"'"
 
     query = 'select '+Q1+' from ' + table_name +Q2+';'
-    cursor.execute(query)
-    result = cursor.fetchall()
-    print(result)
+    try:
+        cursor.execute(query)
+        result = cursor.fetchall()
+        print(result)
+    except Error as e:
+        print(e)
     return result
 
 
@@ -154,7 +158,12 @@ def insert_general(cursor,table_name ,table_attributes,Columns,Values):
     for i in range(1,len(Values)):
         Q2 +=''','''+'''?'''
     query = '''INSERT INTO '''+table_name+ Q1+''' VALUES(''' + Q2 +''')'''
-    cursor.execute(query,Values)
+    try:
+        cursor.execute(query,Values)
+        return True
+    except Error as e:
+        print(e)
+        return False
 
 # ------------------------- Prescription --------------------------------------
 # 1] Retreive From Prescription according to Patient & his Email {Can be General not only Email}

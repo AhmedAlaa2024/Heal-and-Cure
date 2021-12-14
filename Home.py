@@ -4,7 +4,7 @@ from functions import *
 from phonenumbers import geocoder
 from phonenumbers import carrier
 import phonenumbers
-from Models.models import *
+from models.models import *
 from config import *
 #open the connection
 connection = open_connection("hospital.db")
@@ -39,13 +39,19 @@ def SignupHome():
                     # and then store the data in the session 
                     Columns = [Patient.All.value]
                     Values =[Fname, Lname, 20, "+"+PhoneCountry,  str(phoneNumber), AddressCountry, AddressCity, AddressStreet, "M", email, password]
-                    insert_general(cursor,'Patient',Patient_attributes,Columns,Values)
+                    is_added = insert_general(cursor,'Patient',Patient_attributes,Columns,Values)
                     # session['ID']=id
-                    session['Password']= password
-                    session['Email']=email
-                    session['Fname']=Fname
-                    session['Lname']=Lname
-                    return render_template("HomePage.html")
+                    if(is_added):
+                        connection.commit()
+                        result1= selectFromTable(cursor,"Patient",Patient_attributes,[Patient.Patient_ID.value],[(Patient.Email.value,email),(Patient.Password.value,password)])
+                        session['ID']=result1[0][0]
+                        session['Password']= password
+                        session['Email']=email
+                        session['Fname']=Fname
+                        session['Lname']=Lname
+                        return render_template("HomePage.html")
+                    else:
+                        return redirect('/signup/1')
                 else:
                     return redirect('/signup/1')
 @HomePage.route("/login/home",methods=["POST"])
@@ -71,3 +77,6 @@ def LoginHome():
                     return render_template("HomePage.html")
                 else:
                     return redirect("/login/1")
+
+
+connection.close()
