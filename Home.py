@@ -38,17 +38,24 @@ def SignupHome():
                     #the query of the insert
                     # and then store the data in the session 
                     Columns = [Patient.All.value]
-                    Values =[Fname, Lname, 20,PhoneCountry,  str(phoneNumber), AddressCountry, AddressCity, AddressStreet, "M", email, password]
+                    Values =[Fname, Lname, 20 ,PhoneCountry,  str(phoneNumber), AddressCountry, AddressCity, AddressStreet, "M", email, password]
                     is_added = insert_general(cursor,'Patient',Patient_attributes,Columns,Values)
-                    # session['ID']=id
                     if(is_added):
                         connection.commit()
                         result1= selectFromTable(cursor,"Patient",Patient_attributes,[Patient.Patient_ID.value],[(Patient.Email.value,email),(Patient.Password.value,password)])
-                        session['ID']=result1[0][0]
-                        session['Password']= password
-                        session['Email']=email
-                        session['Fname']=Fname
-                        session['Lname']=Lname
+                        session['ID']           =result1[0][0]
+                        session['ID']           =result1[0][0]
+                        session['Fname']        =result1[0][1]
+                        session['Lname']        =result1[0][2]
+                        session['Age']          =result1[0][3]
+                        session['Phonecountry'] =result1[0][4]
+                        session['PhoneNumber']  =result1[0][5]
+                        session['Addresscountry']=result1[0][6]
+                        session['Addresscity']   =result1[0][7]
+                        session['Addressstreet'] =result1[0][8]
+                        session['Gender']        =result1[0][9]
+                        session['Password']      = password
+                        session['Email']         =email
                         return render_template("HomePage.html")
                     else:
                         return redirect('/signup/1')
@@ -66,17 +73,35 @@ def LoginHome():
                 result2= selectFromTable(cursor,"Employee",Employee_attributes,[Employee.All.value],[(Employee.Email.value,email),(Employee.Password.value,password)])
                 #using the session to store the data of the current user
                 if len(result1)!=0:#take the complete data
-                    session['ID']=result1[0][0]
-                    session['Password']= password
-                    session['Email']=email
+                    session['ID']           =result1[0][0]
+                    session['Fname']        =result1[0][1]
+                    session['Lname']        =result1[0][2]
+                    session['Age']          =result1[0][3]
+                    session['Phonecountry'] =result1[0][4]
+                    session['PhoneNumber']  =result1[0][5]
+                    session['Addresscountry']=result1[0][6]
+                    session['Addresscity']   =result1[0][7]
+                    session['Addressstreet'] =result1[0][8]
+                    session['Gender']        =result1[0][9]
+                    session['Password']      = password
+                    session['Email']         =email
                     return render_template("HomePage.html")
                 elif len(result2)!=0:
-                    session['ID']=result2[0][0]
-                    session['Password']= password
-                    session['Email']=email
+                    session['ID']           =result2[0][0]
+                    session['Fname']        =result2[0][1]
+                    session['Lname']        =result2[0][2]
+                    session['Age']          =result2[0][3]
+                    session['Phonecountry'] =result2[0][4]
+                    session['PhoneNumber']  =result2[0][5]
+                    session['Addresscountry']=result2[0][6]
+                    session['Addresscity']   =result2[0][7]
+                    session['Addressstreet'] =result2[0][8]
+                    session['Gender']        =result2[0][9]
+                    session['Goindate']      =result2[0][12]
+                    session['De_id']        =result2[0][13]
+                    session['Group_id']     =result2[0][14]
+                    session['Password']     = password
+                    session['Email']        =email
                     return render_template("HomePage.html")
                 else:
                     return redirect("/login/1")
-
-
-connection.close()

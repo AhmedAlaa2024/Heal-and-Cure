@@ -4,6 +4,7 @@ from sqlite3 import Error
 import enum
 # Dictionaries
 
+
 Department_attributes = {0:"*",1:"ID",2:"FNAME",3:"lNAME",4:"Manager_id",5:"Start_Date"}
 Patient_attributes = {0:"*",1:"ID",2:"FNAME",3:"lNAME",4:"AGE",5:"Phonecountry"
 ,6:"PhoneNumber",7:"Addresscountry",8:"Addresscity",9:"Addressstreet",10:"GENDER",11:"Email",12:"Password"}
@@ -125,9 +126,11 @@ def selectFromTable(cursor,table_name,table_attributes,Columns,Selectors):
         cursor.execute(query)
         result = cursor.fetchall()
         print(result)
+        return result
     except Error as e:
         print(e)
-    return result
+        return []
+
 
 
 # Function: insert General
