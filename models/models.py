@@ -123,7 +123,6 @@ def selectFromTable(cursor,table_name,table_attributes,Columns,Selectors):
     cursor.execute(query)
     result = cursor.fetchall()
     print(result)
-
     return result
 
 
