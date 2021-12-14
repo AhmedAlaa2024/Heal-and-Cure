@@ -38,7 +38,7 @@ def SignupHome():
                     #the query of the insert
                     # and then store the data in the session 
                     Columns = [Patient.All.value]
-                    Values =[Fname, Lname, 20, "+"+PhoneCountry,  str(phoneNumber), AddressCountry, AddressCity, AddressStreet, "M", email, password]
+                    Values =[Fname, Lname, 20,PhoneCountry,  str(phoneNumber), AddressCountry, AddressCity, AddressStreet, "M", email, password]
                     is_added = insert_general(cursor,'Patient',Patient_attributes,Columns,Values)
                     # session['ID']=id
                     if(is_added):
