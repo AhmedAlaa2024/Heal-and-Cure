@@ -154,3 +154,44 @@ def Select_From_Prescription_Employee(cursor,Email,Columns = []):
     result = cursor.fetchall()
     print (result)
     return result
+
+
+
+
+#general update function updates one col without join
+
+def Update(cursor,TableName,SelectingAttributes,SelectingAttributesValues,UpdatedAttributes,UpdatedAttributesValues):
+    Q1='''update '''+TableName+''' set '''
+    for i in range(len(UpdatedAttributes)-1):
+        Q1+=Dicts[TableName][UpdatedAttributes[i]]+''' = '''+str(UpdatedAttributesValues[i])+''' , '''
+    Q1+=Dicts[TableName][UpdatedAttributes[-1]]+''' = '''+str(UpdatedAttributesValues[-1])
+    if len(SelectingAttributes)>0:
+        Q1+=''' where '''
+    for i in range (len(SelectingAttributes)-1):
+        Q1+=Dicts[TableName][SelectingAttributes[i]]+''' = '''+str(SelectingAttributesValues[i])+''' and '''
+    Q1+=Dicts[TableName][SelectingAttributes[-1]]+''' = '''+str(SelectingAttributesValues[-1]) +''' ;'''
+    try:
+        cursor.execute(Q1)
+        return True
+    except Error as e:
+        print(e)
+        return False
+        
+
+
+#general delete from table 
+
+def Delete(cursor,TableName,SelectingAttributes,SelectingAttributesValues):
+    Q1='''delete from '''+TableName+' '
+    if len(SelectingAttributes)>0:
+        Q1+=' where '
+    for i in range (len(SelectingAttributes)-1):
+        Q1+=Dicts[TableName][SelectingAttributes[i]]+' = '+SelectingAttributesValues[i]+' and '
+    Q1+=Dicts[TableName][SelectingAttributes[-1]]+' = '+SelectingAttributesValues[-1] +' ;'
+    try:
+        cursor.execute(Q1)
+        return True
+    except Error as e:
+        print(e)
+        return False
+    
