@@ -1,88 +1,9 @@
 from config import *
 from utils import *
 from sqlite3 import Error
+from defs import *
 import enum
 # Dictionaries
-
-
-Department_attributes = {0:"*",1:"ID",2:"FNAME",3:"lNAME",4:"Manager_id",5:"Start_Date"}
-Patient_attributes = {0:"*",1:"ID",2:"FNAME",3:"lNAME",4:"AGE",5:"Phonecountry"
-,6:"PhoneNumber",7:"Addresscountry",8:"Addresscity",9:"Addressstreet",10:"GENDER",11:"Email",12:"Password"}
-Employee_attributes ={0:"*",1:"ID",2:"FNAME",3:"lNAME",4:"AGE",5:"Phonecountry"
-,6:"PhoneNumber",7:"Addresscountry",8:"Addresscity",9:"Addressstreet",10:"GENDER",11:"Email",12:"Password",13:"JoinDate",14:"D_id",15:"Group_id"}
-Prescription_attributes = {0:"*",1:"ID",2:"DATE",3:"Illness",4:"Treatment",5:"Doc_id",6:"Patient_id"}
-GlobalContract_attributes = {0:"*",1:"ID",2:"Terms",3:"Penalty"}
-EmployeeContract_attributes = {0:"*",1:"ID",2:"E_ID",3:"GlobalContract_ID"}
-PatientContract_attributes = {0:"*",1:"P_ID",2:"E_ID",3:"Doc_ID",4:"GlobalContract_ID",5:"OP_ID"}
-
-# Enums
-class Employee(enum.Enum):
-    All = 0
-    Employee_ID = 1
-    FNAME = 2
-    lNAME = 3
-    Age = 4
-    Phonecountry = 5    
-    PhoneNumber = 6
-    Addresscountry = 7
-    Addresscity = 8
-    Addressstreet = 9
-    GENDER = 10
-    Email = 11
-    Password = 12
-    JoinDate = 13
-    D_id = 14
-    Group_id =15
-class Patient (enum.Enum):
-    All = 0
-    Patient_ID = 1
-    FNAME = 2
-    lNAME = 3
-    Age = 4
-    Phonecountry = 5    
-    PhoneNumber = 6
-    Addresscountry = 7
-    Addresscity = 8
-    Addressstreet = 9
-    GENDER = 10
-    Email = 11
-    Password = 12
-
-class Deparment (enum.Enum):
-    All = 0
-    Department_ID = 1
-    FNAME = 2
-    lNAME = 3
-    Manager_id = 4
-    Start_Date = 5
-
-class Prescription (enum.Enum):
-    All = 0
-    ID = 1
-    Illness = 2
-    Treatment = 3
-    Doc_id = 4
-    Patient_id = 5
-class GlobalContract (enum.Enum):
-    All = 0
-    GlobalContract_ID = 1
-    Terms= 2
-    Penalty =3 
-class EmployeeContract (enum.Enum):
-    All = 0
-    ID = 1
-    E_ID=2
-    GlobalContract_ID=3
-
-
-class PatientContract (enum.Enum):
-    All = 0
-    P_ID = 1
-    E_ID = 2
-    Doc_ID=3
-    GlobalContract_ID=4
-    OP_ID=5
-
 
 
 
