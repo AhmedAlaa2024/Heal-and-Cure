@@ -186,8 +186,8 @@ def Delete(cursor,TableName,SelectingAttributes,SelectingAttributesValues):
     if len(SelectingAttributes)>0:
         Q1+=' where '
     for i in range (len(SelectingAttributes)-1):
-        Q1+=Dicts[TableName][SelectingAttributes[i]]+' = '+SelectingAttributesValues[i]+' and '
-    Q1+=Dicts[TableName][SelectingAttributes[-1]]+' = '+SelectingAttributesValues[-1] +' ;'
+        Q1+=Dicts[TableName][SelectingAttributes[i]]+' = '+str(SelectingAttributesValues[i])+' and '
+    Q1+=Dicts[TableName][SelectingAttributes[-1]]+' = '+str(SelectingAttributesValues[-1]) +' ;'
     try:
         cursor.execute(Q1)
         return True

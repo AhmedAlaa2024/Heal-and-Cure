@@ -51,7 +51,7 @@ cursor = get_cursor(connection)
 result = Select_From_Prescription_Employee(cursor,'ahmedsabry232345.com2024@gmail.com',[])
 connection.commit()
 
-result=Update(cursor,'Patient',[Patient.Email.value,Patient.Patient_ID.value],['''"ahmedsabry@gmail.com"''',1],[Patient.Age.value],[50])
-
+result=Delete(cursor,'Patient',[Patient.Age.value],[50])
+connection.commit()
 connection.close()
 #close_connection(connection)
