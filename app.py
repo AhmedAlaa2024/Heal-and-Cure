@@ -4,6 +4,7 @@ from login import LoginPage
 from Home import HomePage
 from SignUp import signupPage
 from profile import ProfilePage
+from Logout import LogoutPage
 from werkzeug.utils import redirect
 from utils import *
 from config import *
@@ -19,6 +20,6 @@ app.register_blueprint(HomePage)
 app.register_blueprint(LoginPage)
 app.register_blueprint(signupPage)
 app.register_blueprint(ProfilePage)
-
+app.register_blueprint(LogoutPage)
 if __name__=="__main__":
     app.run(debug=True)
