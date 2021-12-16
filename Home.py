@@ -58,7 +58,7 @@ def SignupHome():
                         session['Email']         =email
                         return render_template("HomePage.html")
                     else:
-                        return redirect('/signup/1')
+                        return redirect('/signup/0')
                 else:
                     return redirect('/signup/1')
 @HomePage.route("/login/home",methods=["POST"])

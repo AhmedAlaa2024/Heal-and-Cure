@@ -161,4 +161,15 @@ DONATION_TABLE ='''CREATE TABLE IF NOT EXISTS Donation
   CONSTRAINT DONATION_DONAR FOREIGN KEY (DonarId) REFERENCES Doner (ID)
 )
 '''
-HOSPITAL_DB_TABLES = [Department_TABLE, Patient_TABLE, Employee_TABLE, Prescription_TABLE, Reservation_TABLE, GlobalContract_TABLE, EmployeeContract_TABLE, PatientContract_TABLE, Room_TABLE, Examination_TABLE]
+Patient_Status_Table='''CREATE TABLE IF NOT EXISTS PatientStatus
+              (
+              PatientID  INTEGER PRIMARY KEY NOT NULL  ,
+              Diabetes  VARCHAR(5) ,
+              Cholestrol  VARCHAR(5) ,
+              Blood_Pressure VARCHAR(5),
+              Depression     VARCHAR(5),
+              Max_Haert_Rate  VARCHAR(5),
+              CONSTRAINT Status_Rel FOREIGN KEY (PatientID) REFERENCES Patient (ID)
+              )
+              '''
+HOSPITAL_DB_TABLES = [Department_TABLE, Patient_TABLE, Employee_TABLE, Prescription_TABLE, Reservation_TABLE, GlobalContract_TABLE, EmployeeContract_TABLE, PatientContract_TABLE, Room_TABLE, Examination_TABLE,Patient_Status_Table]
