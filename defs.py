@@ -132,11 +132,11 @@ Resrvation_attributes={
 
 ####################################################################################
 Department_attributes = {0:"*",1:"ID",2:"FNAME",3:"lNAME",4:"Manager_id",5:"Start_Date"}
-Patient_attributes = {0:"*",1:"ID",2:"FNAME",3:"lNAME",4:"AGE",5:"Phonecountry",6:"Phonecity"
-,7:"PhoneNumber",8:"Addresscountry",9:"Addresscity",10:"Addressstreet",11:"GENDER",12:"Email",13:"Password"}
-Employee_attributes ={0:"*",1:"ID",2:"FNAME",3:"lNAME",4:"AGE",5:"Phonecountry",6:"Phonecity"
-,7:"PhoneNumber",8:"Addresscountry",9:"Addresscity",10:"Addressstreet",11:"GENDER",12:"Email",13:"Password",14:"JoinDate",15:"D_id",16:"Group_id"}
-Prescription_attributes = {0:"*",1:"ID",2:"Illness",3:"Treatment",4:"Doc_id",5:"Patient_id"}
+Patient_attributes = {0:"*",1:"ID",2:"FNAME",3:"lNAME",4:"AGE",5:"Phonecountry"
+,6:"PhoneNumber",7:"Addresscountry",8:"Addresscity",9:"Addressstreet",10:"GENDER",11:"Email",12:"Password"}
+Employee_attributes ={0:"*",1:"ID",2:"FNAME",3:"lNAME",4:"AGE",5:"Phonecountry"
+,6:"PhoneNumber",7:"Addresscountry",8:"Addresscity",9:"Addressstreet",10:"GENDER",11:"Email",12:"Password",13:"JoinDate",14:"D_id",15:"Group_id"}
+Prescription_attributes = {0:"*",1:"ID",2:"DATE",3:"Illness",4:"Treatment",5:"Doc_id",6:"Patient_id"}
 GlobalContract_attributes = {0:"*",1:"ID",2:"Terms",3:"Penalty"}
 EmployeeContract_attributes = {0:"*",1:"ID",2:"E_ID",3:"GlobalContract_ID"}
 PatientContract_attributes = {0:"*",1:"P_ID",2:"E_ID",3:"Doc_ID",4:"GlobalContract_ID",5:"OP_ID"}
@@ -149,17 +149,16 @@ class Employee(enum.Enum):
     lNAME = 3
     Age = 4
     Phonecountry = 5    
-    Phonecity = 6
-    PhoneNumber = 7
-    Addresscountry = 8
-    Addresscity = 9
-    Addressstreet = 10
-    GENDER = 11
-    Email = 12
-    Password = 13
-    JoinDate = 14
-    D_id = 15
-    Group_id =16
+    PhoneNumber = 6
+    Addresscountry = 7
+    Addresscity = 8
+    Addressstreet = 9
+    GENDER = 10
+    Email = 11
+    Password = 12
+    JoinDate = 13
+    D_id = 14
+    Group_id =15
 class Patient (enum.Enum):
     All = 0
     Patient_ID = 1
@@ -167,14 +166,13 @@ class Patient (enum.Enum):
     lNAME = 3
     Age = 4
     Phonecountry = 5    
-    Phonecity = 6
-    PhoneNumber = 7
-    Addresscountry = 8
-    Addresscity = 9
-    Addressstreet = 10
-    GENDER = 11
-    Email = 12
-    Password = 13
+    PhoneNumber = 6
+    Addresscountry = 7
+    Addresscity = 8
+    Addressstreet = 9
+    GENDER = 10
+    Email = 11
+    Password = 12
 
 class Deparment (enum.Enum):
     All = 0
