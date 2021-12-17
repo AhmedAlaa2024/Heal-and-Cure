@@ -1,8 +1,7 @@
 #department table
 Department_TABLE = '''CREATE TABLE IF NOT EXISTS Department
          (ID INTEGER PRIMARY KEY     AUTOINCREMENT NOT NULL,
-         FNAME           CHAR(50)  NOT NULL,
-         lNAME          CHAR(50)     NOT NULL,
+         Department_Name  VARCHAR(250)  UNIQUE,
          Manager_id     INT,
          Start_Date     VARCHAR(18) DEFAULT '00:00AM,00/00/0000',
          CONSTRAINT Manage FOREIGN KEY (Manager_id) REFERENCES Employee (ID)

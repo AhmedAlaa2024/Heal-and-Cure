@@ -221,19 +221,19 @@ class PatientStatus (enum.Enum):
     All = 0
     Patient_ID = 1
     Diabetes = 2
-    Cholestrol = 2
-    BloodPressure = 4
+    Cholestrol = 3
+    Blood_Pressure = 4
     Depression = 5
-    MaxHR = 6
+    Max_Heart_Rate = 6
 
 PatientStatus_attributes={
     0:"*",
-    1: "Patient_ID",
+    1: "PatientID",
     2: "Diabetes",
     3:"Cholestrol",
-    4:"BloodPressure",
+    4:"Blood_Pressure",
     5:"Depression",
-    6:"MaxHR"
+    6:"Max_Heart_Rate"
 }
 
 Dicts={

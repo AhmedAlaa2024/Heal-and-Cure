@@ -7,7 +7,7 @@ from functions import *
 from phonenumbers import geocoder
 from phonenumbers import carrier
 import phonenumbers
-from models.models import Update
+from models.models import *
 from config import *
 ProfilePage=Blueprint("profile",__name__)
 '''
@@ -30,6 +30,19 @@ Database_Setup(cursor)
 @ProfilePage.route("/profile/<int:id>",methods=["POST","GET"])
 def profile(id):
     if "ID" in session: #Edit page
+        if("Group_id" not in session):
+            # the query to get the status
+            result3= selectFromTable(cursor,"PatientStatus",PatientStatus_attributes,[PatientStatus.All.value],[(PatientStatus.Patient_ID.value,session['ID'])])
+            if len(result3)!=0:
+                session["disease1"]=result3[0][0]
+                session["disease2"]=result3[0][1]
+                session["disease3"]=result3[0][2]
+                session["disease4"]=result3[0][3]
+                session["disease5"]=result3[0][4]
+            # Queries to the prescripation
+            session["DoctorName"]="Bolbol"
+            session["DATE"]="28-10-2000"
+            session["Treatment"]="eb3d 3n alaa"
         if id==1 and request.method=="POST":
             return render_template("Profile.html",edit=id,data=session)
         elif id==0: #main profile page
@@ -46,7 +59,10 @@ def profile(id):
                 phone = phonenumbers.parse(PhoneCountry+phoneNumber)
                 if not(has_numbers(Fname)) and not(has_numbers(Lname)and(phonenumbers.is_valid_number(phone))):
                     new_info=['"'+Fname+'"','"'+Lname+'"','"'+email+'"','"'+password+'"',phoneNumber,'"'+Addresscountry+'"','"'+Addresscity+'"','"'+Addressstreet+'"']
-                    is_upadated = Update(cursor,'Patient',[Patient.Patient_ID.value],[session['ID']],[Patient.FNAME.value,Patient.lNAME.value,Patient.Email.value,Patient.Password.value,Patient.PhoneNumber.value,Patient.Addresscountry.value,Patient.Addresscity.value,Patient.Addressstreet.value],new_info)
+                    if("Group_id" not in session):
+                        is_upadated = Update(cursor,'Patient',[Patient.Patient_ID.value],[session['ID']],[Patient.FNAME.value,Patient.lNAME.value,Patient.Email.value,Patient.Password.value,Patient.PhoneNumber.value,Patient.Addresscountry.value,Patient.Addresscity.value,Patient.Addressstreet.value],new_info)
+                    else:
+                        is_upadated = Update(cursor,'Employee',[Employee.Employee_ID.value],[session['ID']],[Employee.FNAME.value,Employee.lNAME.value,Employee.Email.value,Employee.Password.value,Employee.PhoneNumber.value,Employee.Addresscountry.value,Employee.Addresscity.value,Employee.Addressstreet.value],new_info)
                     if is_upadated:
                         connection.commit()
                         session["Fname"]=Fname
@@ -68,3 +84,19 @@ def profile(id):
             return render_template("Profile.html",edit=id,data=session)
     else:
         return "login first"
+
+#the profile page of the admin 
+#when the home page is ended i will add a button to the profile page and i will select which route should be called
+#if Group_id==A  
+@ProfilePage.route("/AdminProfile/<Operation>",methods=["POST","GET"])
+def Admin(Operation):
+    if session["Group_id"]=="A":
+        if(Operation=="Departments"):
+            #query to get all ssn of the employees how don't manage adepartment (inner join) and save the ssn in list
+            return render_template("AdminFormEdit.html",SSNList=session,selector=Operation)
+        elif Operation=="Employees":
+            #query to get the list of the departments names
+            return render_template("AdminFormEdit.html",SSNList=session,selector=Operation)
+        
+    else:
+        return "you are not allowed"
