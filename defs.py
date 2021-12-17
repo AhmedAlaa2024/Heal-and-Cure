@@ -217,7 +217,24 @@ class PatientContract (enum.Enum):
 
 
 
+class PatientStatus (enum.Enum):
+    All = 0
+    Patient_ID = 1
+    Diabetes = 2
+    Cholestrol = 2
+    BloodPressure = 4
+    Depression = 5
+    MaxHR = 6
 
+PatientStatus_attributes={
+    0:"*",
+    1: "Patient_ID",
+    2: "Diabetes",
+    3:"Cholestrol",
+    4:"BloodPressure",
+    5:"Depression",
+    6:"MaxHR"
+}
 
 Dicts={
     'Patient':Patient_attributes,
@@ -232,7 +249,7 @@ Dicts={
     'Examination_Operation' : Examintion_and_Operation_attributes,
     'Operations' : Operation_attributes,
     'Donor' : Donor_attributes,
-    'Donation' : Donation_attributes
-
+    'Donation' : Donation_attributes,
+    'PatientStatus':PatientStatus_attributes
 }
 
