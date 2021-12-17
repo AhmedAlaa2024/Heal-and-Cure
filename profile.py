@@ -53,6 +53,7 @@ def profile(id):
                         session["Lname"]=Lname
                         session["Email"]=email
                         session["password"]=password
+                        session["PhoneNumber"]=phoneNumber
                         session["Addresscountry"]=Addresscountry
                         session["Addressstreet"]=Addressstreet
                         session["Addresscity"]=Addresscity
