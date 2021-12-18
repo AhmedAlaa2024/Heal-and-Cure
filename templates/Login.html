@@ -25,8 +25,8 @@
       <label for="password">Password</label>
       <div class="sec-2">
         <ion-icon name="lock-closed-outline"></ion-icon>
-        <input class="pas" type="password" name="password" placeholder="············" required/>
-        <ion-icon class="show-hide" name="eye-outline"></ion-icon>
+        <input class="pas"id="pas" type="password" name="password" placeholder="············" required/>
+        <ion-icon class="show-hide" name="eye-outline"id="eye-outline" style="cursor: pointer;"></ion-icon>
       </div>
     </div>
     <button class="login">Login </button>
@@ -37,5 +37,13 @@
   {%endif%}
 </div>
 <!-- partial -->
+<script>
+  document.getElementById("eye-outline").onmouseover=()=>{
+    document.getElementById("pas").setAttribute("type","text");
+  };
+  document.getElementById("eye-outline").onmouseout=()=>{
+    document.getElementById("pas").setAttribute("type","password");
+  };
+</script>
 </body>
 </html>
