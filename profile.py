@@ -2,6 +2,7 @@ from os import abort
 from sqlite3.dbapi2 import Cursor
 from flask import render_template,Blueprint,request, session
 from phonenumbers.phonenumber import PhoneNumber
+from werkzeug.utils import redirect
 from defs import Patient
 from functions import *
 from phonenumbers import geocoder
@@ -27,7 +28,7 @@ connection = open_connection("hospital.db")
 cursor = get_cursor(connection)
 Database_Setup(cursor)
 
-@ProfilePage.route("/profile/<int:id>",methods=["POST","GET"])
+@ProfilePage.route("/profile/<string:id>",methods=["POST","GET"])
 def profile(id):
     if "ID" in session: #Edit page
         if("Group_id" not in session):
@@ -43,9 +44,9 @@ def profile(id):
             session["DoctorName"]="Bolbol"
             session["DATE"]="28-10-2000"
             session["Treatment"]="eb3d 3n alaa"
-        if id==1 and request.method=="POST":
+        if id=="Edit" and request.method=="POST":
             return render_template("Profile.html",edit=id,data=session)
-        elif id==0: #main profile page
+        elif id=="mainprofile": #main profile page
             if request.method=="POST":
                 Fname=request.form.get("Fname")
                 Lname=request.form.get("Lname")
@@ -81,22 +82,60 @@ def profile(id):
             else :
                 return render_template("Profile.html",edit=id,data=session)
         else:
-            return render_template("Profile.html",edit=id,data=session)
+            return redirect("/home")
     else:
         return "login first"
 
 #the profile page of the admin 
 #when the home page is ended i will add a button to the profile page and i will select which route should be called
 #if Group_id==A  
+
+
 @ProfilePage.route("/AdminProfile/<Operation>",methods=["POST","GET"])
 def Admin(Operation):
     if session["Group_id"]=="A":
-        if(Operation=="Departments"):
-            #query to get all ssn of the employees how don't manage adepartment (inner join) and save the ssn in list
-            return render_template("AdminFormEdit.html",SSNList=session,selector=Operation)
-        elif Operation=="Employees":
-            #query to get the list of the departments names
-            return render_template("AdminFormEdit.html",SSNList=session,selector=Operation)
+        if(Operation=="Department"):
+            #query to get the data of the departments
+            return render_template("ShowDataToAdmin.html",Type=Operation)
+        elif Operation=="Employee":
+            #query to get the data of the employees
+            return render_template("ShowDataToAdmin.html",Type=Operation)
         
     else:
         return "you are not allowed"
+
+
+@ProfilePage.route("/AdminProfile/Departments/<string:operation>",methods=["POST","GET"])
+def AdminSettingsDepartments(operation):
+    if session["Group_id"]=="A":
+        if operation=="Insert":
+            return render_template("AdminSettings.html",SSNList=session,Type="Departments",selector=operation)
+    else:
+        return "you are not allowed"
+
+@ProfilePage.route("/AdminProfile/Employees/<string:operation>",methods=["POST","GET"])
+def AdminSettingsEmployees(operation):
+    if session["Group_id"]=="A":
+        if operation=="Insert":
+            return render_template("AdminSettings.html",SSNList=session,Type="Employees",selector=operation)
+    else:
+        return "you are not allowed"
+#rout to check the data form the Admin
+@ProfilePage.route("/AdminProfile/Employees/checkdata",methods=["POST"])
+def AdmincheckoutData():
+    if request.form.get("Departmentname") !=None :
+        Departmentname=request.form.get("Departmentname")
+        Startdate=request.form.get("startDate")
+        Departmentmanager=request.form.get("Manager")
+        DepartmentDes=request.form.get("Descripation")
+        #Bolbol check the data
+        return redirect("/AdminProfile/Department")
+    else:
+        Departmentname=request.form.get("Departmentname")
+        Departmentname=request.form.get("Departmentname")
+        Departmentname=request.form.get("Departmentname")
+        Departmentname=request.form.get("Departmentname")
+        Departmentname=request.form.get("Departmentname")
+        Departmentname=request.form.get("Departmentname")
+        Departmentname=request.form.get("Departmentname")
+        return redirect("/AdminProfile/employee")

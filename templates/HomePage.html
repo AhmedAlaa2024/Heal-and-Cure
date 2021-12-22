@@ -78,16 +78,16 @@
                          <li><a href="#news" class="smoothScroll">Donations</a></li>
                          <li><a href="#google-map" class="smoothScroll">Contact</a></li>
                          <!-- <li class="appointment-btn"><a href="#">Make an appointment</a></li> -->
-                         {% if(is_loggedin == True): %}
                          <!-- <li class="smoothScroll"><a href="#appointment"><img src = "{{url_for('static',filename = 'img/')}}"> ></a></li> -->
-                         <li class="smoothScroll"><a href="/profile/0"> Profile </a></li>
+                         <!-- <li class="smoothScroll"><a href="/profile/0"> Profile </a></li> -->
                          <!-- Link Profile Here -->
-                         {%endif%}
-                         {% if(is_loggedin == False): %}
+                         {% if "ID" not in Data%}
                          <li class="smoothScroll" ><a href="/signup/0">Sign-up</a></li>
                                                   <!-- Link Sign-up Here -->
                          <li class="smoothScroll"><a href="/login/0">Login</a></li>
                                                   <!-- Link login Here -->
+                         {%else%}
+                         <li class="smoothScroll"><a href="/profile/mainprofile"> Profile  </a></li>
                          {%endif%}
                     </ul>
                </div>

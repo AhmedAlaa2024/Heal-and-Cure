@@ -20,16 +20,17 @@ activate_Fks(cursor)
 
 
 HomePage=Blueprint("Home",__name__)
+@HomePage.route('/',methods=["GET", "POST"])
 @HomePage.route('/home',methods=["GET", "POST"])
 def mainpage():
     count = Select_count_Department(cursor)
     connection.commit()
-    Data = selectFromTable(cursor,'Department',Department_attributes,[Deparment.All.value],[])
+    DataDp = selectFromTable(cursor,'Department',Department_attributes,[Deparment.All.value],[])
     Manager_Data = select_All_manager_name(cursor)
     Donations = select_Donations(cursor)
     count =count_donations(cursor)
     #Admin  = selectFromTable(cursor,'Employee',Employee_attributes,[Employee.All.value],[(Employee.Group_id,'A')])
-    return render_template('HomePage.html',is_loggedin = False,Donations =count,Manager_Data =Manager_Data,data_of_department = Data,no_departments = count[0][0]) # pass your Data here  like Departments & Donations & all other informations
+    return render_template('HomePage.html',is_loggedin = False,Donations =count,Manager_Data =Manager_Data,data_of_department = DataDp,no_departments = count[0][0],Data=session) # pass your Data here  like Departments & Donations & all other informations
 
 @HomePage.route('/Departments/<ID_Department>',methods=["GET", "POST"])
 def Dapartments(ID_Department):
@@ -69,7 +70,6 @@ def SignupHome():
                         connection.commit()
                         result1= selectFromTable(cursor,"Patient",Patient_attributes,[Patient.Patient_ID.value],[(Patient.Email.value,email),(Patient.Password.value,password)])
                         session['ID']           =result1[0][0]
-                        session['ID']           =result1[0][0]
                         session['Fname']        =result1[0][1]
                         session['Lname']        =result1[0][2]
                         session['Age']          =result1[0][3]
@@ -81,7 +81,7 @@ def SignupHome():
                         session['Gender']        =result1[0][9]
                         session['Password']      = password
                         session['Email']         =email
-                        return render_template("HomePage.html")
+                        return redirect("/home")
                     else:
                         return redirect('/signup/0')
                 else:
@@ -110,7 +110,7 @@ def LoginHome():
                     session['Gender']        =result1[0][9]
                     session['Password']      = password
                     session['Email']         =email
-                    return render_template("HomePage.html")
+                    return redirect("/home")
                 elif len(result2)!=0:
                     session['ID']           =result2[0][0]
                     session['Fname']        =result2[0][1]
@@ -127,6 +127,6 @@ def LoginHome():
                     session['Group_id']     =result2[0][14]
                     session['Password']     = password
                     session['Email']        =email
-                    return render_template("HomePage.html")
+                    return redirect("/home")
                 else:
                     return redirect("/login/1")
