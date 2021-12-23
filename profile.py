@@ -96,12 +96,12 @@ def Admin(Operation):
     if session["Group_id"]=="A":
         if(Operation=="Department"):
             #query to get the data of the departments
-            #Result=
-            return render_template("ShowDataToAdmin.html",Type=Operation,Data=session)
+            Result= selectFromTable(cursor,'Department',Department_attributes,[Deparment.All.value] ,[] )
+            return render_template("ShowDataToAdmin.html",Type=Operation,Data=Result)
         elif Operation=="Employee":
             #query to get the data of the employees
-            #Result=
-            return render_template("ShowDataToAdmin.html",Type=Operation,Data=session)
+            Result= selectFromTable(cursor,'Employee',Employee_attributes,[Employee.All.value] ,[] )
+            return render_template("ShowDataToAdmin.html",Type=Operation,Data=Result)
         
     else:
         return "you are not allowed"
@@ -160,11 +160,13 @@ def deleteEmployee(id):
 @ProfilePage.route('/EditEmployee/<int:id>')
 def EditEmployee(id):
     # query to get the data of the id
-    return render_template("EditData.html",Type="Employees",SSNList=session)
+    employee_Data = selectFromTable(cursor,'Employee',Employee_attributes,[Employee.All.value] ,[(Employee.Employee_ID.value,id)] )
+    return render_template("EditData.html",Type="Employees",SSNList = employee_Data)
     #bolbol get the data and check it
 #route to edit the data of the Departments
 @ProfilePage.route('/EditDepartment/<int:id>')
 def EditDepartment(id):
     # query to retrive the data of the id
-    return render_template("EditData.html",Type="Departments",DEList=session)
+    department_Data = selectFromTable(cursor,'Department',Department_attributes,[Deparment.All.value] ,[(Deparment.Department_ID.value,id)] )
+    return render_template("EditData.html",Type="Departments",DEList=department_Data)
     #bolbol get the data and check it
