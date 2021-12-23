@@ -25,7 +25,7 @@
     
     <div class="container">
       <div class="row align-items-stretch no-gutters contact-wrap">
-        {%if selector=="Insert" and Type=="Departments"%}
+        {%if Type=="Departments"%}
         <div class="col-md-12">
           <div class="form h-100">
             <h3>Get Started</h3>
@@ -74,7 +74,7 @@
           </div>
         </div>
         {%endif%}
-        {%if selector=="Insert" and Type=="Employees"%}
+        {%if Type=="Employees"%}
         <form class="col md-12" method="post" id="contactForm" name="contactForm" style="padding:40px 30px" action="/AdminProfile/checkdata">
           <div class="row">
             <div class="col-md-6 form-group mb-3">
