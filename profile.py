@@ -10,6 +10,7 @@ from phonenumbers import carrier
 import phonenumbers
 from models.models import *
 from config import *
+from datetime import datetime
 ProfilePage=Blueprint("profile",__name__)
 '''
 I already have the data in the session and i will detect if the user is patient or doctor by using group id
@@ -128,11 +129,25 @@ def AdmincheckoutData():
     if request.form.get("Departmentname") !=None :
         #the data of the department
         Departmentname=request.form.get("Departmentname")
-        Startdate=request.form.get("startDate")
-        Departmentmanager=request.form.get("Manager")
+        Startdate=request.form.get("StartDate")
+        # I just added department manager manually to test the validations
+        Departmentmanager=1#request.form.get("Manager") 
         DepartmentDes=request.form.get("Descripation")
         #Bolbol check the data and insert it in the database
+        #check the department manager and check the start date of him 
+        Employee_ID=cursor.execute('''select ID from Employee ;''').fetchall()
+        if(not (Departmentmanager in Employee_ID[0])):
+            return "the manager doesn't exist in Employees"
+        Employee_joinDate = cursor.execute('''select JoinDate from Employee where ID = '''+str(Departmentmanager)+''';''').fetchall()
+        Startdate1=datetime.strptime(str(Startdate),'%Y-%m-%d')
+        if(not(datetime.strptime(Employee_joinDate[0][0],'%d-%m-%Y')<Startdate1)):
+            return "this Employee joined the hospital after this date " 
+        # I have checked the data but will change the return of faults
+        cursor.execute('''insert into Department values("'''+str(Departmentname)+'''",'''+str(Departmentmanager)+''',"'''+str(Startdate1)+'''");''')
+        #fix the auto increment fault
+        connection.commit()
         return redirect("/AdminProfile/Department")
+        
     else:
         # the data of the employee
         Fname=request.form.get("Fname")
@@ -144,7 +159,15 @@ def AdmincheckoutData():
         PhonNumber=request.form.get("PhonNumber")
         Addresscountry=request.form.get("Addresscountry")
         Addressstreet=request.form.get("Addressstreet")
+        Addresscity=request.form.get("Adresscity")
         #Bolbol check the data and insert it in the database
+        PhoneCountry="+"+str(codes[recode(Addresscountry)]) 
+        phone = phonenumbers.parse(PhoneCountry+PhonNumber)
+        if not(has_numbers(Fname)) and not(has_numbers(Lname)and(phonenumbers.is_valid_number(phone))):
+            info=['"'+Fname+'"','"'+Lname+'"','"'+Email+'"','"'+Password+'"',PhonNumber,'"'+Addresscountry+'"','"'+Addresscity+'"','"'+Addressstreet+'"']
+            cursor.execute('''insert into Employee values (?,?,?,?,?,?,?,?)''',info)
+            #it doesn't work yet until add the department id
+            connection.commit()
         return redirect("/AdminProfile/Employee")
 # route to delete the Departments by using the id
 @ProfilePage.route('/DeleteDepartment/<int:id>')

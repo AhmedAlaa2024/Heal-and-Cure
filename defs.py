@@ -10,7 +10,7 @@ class Room(enum.Enum):
     Department_ID=4
 
 Room_attributes={
-    0:'All',
+    0:'*',
     1:"Room_ID",
     2:"Last_stay",
     3:'Available',
@@ -29,7 +29,7 @@ class Examination(enum.Enum):
     Department_ID=7
 
 Examination_attributes={
-    0:'All',
+    0:'*',
     1:'Examination_ID',
     2:'Examination_Date',
     3:'Result',
@@ -47,7 +47,7 @@ class Examintion_and_Operation(enum.Enum):
     Operation_ID=2
 
 Examintion_and_Operation_attributes={
-    0:'All',
+    0:'*',
     1:'Examination_Id',
     2:'Operation_ID'
 }
@@ -63,7 +63,7 @@ class Operation(enum.Enum):
     Res_ID=7
 
 Operation_attributes={
-    0:'All',
+    0:'*',
     1:'Operation_ID',
     2:'Operation_State',
     3:'Operation_start_Time',
@@ -85,7 +85,7 @@ class Donor(enum.Enum):
     Donor_Lname=6
 
 Donor_attributes={
-    0:'All',
+    0:'*',
     7:'Donor_ID',
     1:'Donor_Blood_Type',
     2:'Donor_Street',
@@ -104,7 +104,7 @@ class Donation(enum.Enum):
 
 
 Donation_attributes={
-    0:'All',
+    0:'*',
     1:'Donation_ID',
     2:'Donation_Date',
     3:'Donation_Donation_Type',
@@ -121,7 +121,7 @@ class Resrvation(enum.Enum):
     Resrvation_Patient_ID=6
 
 Resrvation_attributes={
-    0:'All',
+    0:'*',
     1:'Rservation_Id',
     2:'Resrvation_Date',
     3:'Resrvation_illness',
