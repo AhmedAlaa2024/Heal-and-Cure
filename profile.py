@@ -123,7 +123,7 @@ def AdminSettingsEmployees(operation):
     else:
         return "you are not allowed"
 #rout to check the data form the Admin
-@ProfilePage.route("/AdminProfile/checkdata",methods=["POST"])
+@ProfilePage.route("/AdminProfile/checkdata/<string:opertaion>",methods=["POST"])
 def AdmincheckoutData():
     if request.form.get("Departmentname") !=None :
         #the data of the department
@@ -132,6 +132,10 @@ def AdmincheckoutData():
         Departmentmanager=request.form.get("Manager")
         DepartmentDes=request.form.get("Descripation")
         #Bolbol check the data and insert it in the database
+        # if opertaion=="Insert":
+        #     #to insert
+        # else:
+        #     #to insert
         return redirect("/AdminProfile/Department")
     else:
         # the data of the employee
@@ -145,6 +149,10 @@ def AdmincheckoutData():
         Addresscountry=request.form.get("Addresscountry")
         Addressstreet=request.form.get("Addressstreet")
         #Bolbol check the data and insert it in the database
+        # if opertaion=="Insert":
+        #     #to insert
+        # else:
+        #     #to insert
         return redirect("/AdminProfile/Employee")
 # route to delete the Departments by using the id
 @ProfilePage.route('/DeleteDepartment/<int:id>')
@@ -161,12 +169,12 @@ def deleteEmployee(id):
 def EditEmployee(id):
     # query to get the data of the id
     employee_Data = selectFromTable(cursor,'Employee',Employee_attributes,[Employee.All.value] ,[(Employee.Employee_ID.value,id)] )
-    return render_template("EditData.html",Type="Employees",SSNList = employee_Data)
+    return render_template("EditData.html",Type="Employees",SSNList =session,DataEmp=employee_Data)
     #bolbol get the data and check it
 #route to edit the data of the Departments
 @ProfilePage.route('/EditDepartment/<int:id>')
 def EditDepartment(id):
     # query to retrive the data of the id
     department_Data = selectFromTable(cursor,'Department',Department_attributes,[Deparment.All.value] ,[(Deparment.Department_ID.value,id)] )
-    return render_template("EditData.html",Type="Departments",DEList=department_Data)
+    return render_template("EditData.html",Type="Departments",SSNList=session,DataDP=department_Data)
     #bolbol get the data and check it
