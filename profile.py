@@ -10,6 +10,7 @@ from phonenumbers import carrier
 import phonenumbers
 from models.models import *
 from config import *
+
 ProfilePage=Blueprint("profile",__name__)
 '''
 I already have the data in the session and i will detect if the user is patient or doctor by using group id
