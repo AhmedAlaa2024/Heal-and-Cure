@@ -6,7 +6,14 @@ import enum
 # Dictionaries
 
 
-
+def activate_Fks(cursor):
+    query = "PRAGMA foreign_keys = ON;"
+    try:
+        cursor.execute(query)
+        return True
+    except Error as e:
+        print(e)
+        return False
 #===================================================================================================
 # Function: selectFromTable
 # Input:    cursor ,string:table_name , list:Columns -> [Enum_Name.attribute.value,...]
@@ -200,4 +207,144 @@ def Delete(cursor,TableName,SelectingAttributes,SelectingAttributesValues):
     except Error as e:
         print(e)
         return False
+
+
+
+# ------------------------- Prescription --------------------------------------
+# 1] Retreive From Prescription according to Patient & his Email {Can be General not only Email}
+# Before insertion  we must Check Doc_ID is for Doctor Group_ID = 'D'
+
+def SelecT_ALL_Prescription_Patient(cursor,Email):
+
+    #query = '''Select * from Prescription Ps,Patient P where Ps.Patient_id = P.ID And P.Email='''+"'"+Email+"'"
+    #cursor.execute(query)
+    query = '''Select * from Prescription Ps,Patient P where Ps.Patient_id = P.ID And P.Email=?;'''
+    cursor.execute(query,[Email])
+    result = cursor.fetchall()
+    print (result)
+    return result
+
+def Select_From_Prescription_Patient(cursor,Email,Columns = []):
+
+    Q1 = ''''''
+    if (len(Columns) > 0):
+        Q1 += Prescription_attributes[Columns[0]]
+        for i in range(1,len(Columns)):
+            Q1 += ''','''
+            Q1 += Prescription_attributes[Columns[i]]
+    else:
+        Q1 += Prescription_attributes[2]
+        for i in range(3,len(Prescription_attributes)):
+            Q1 += ''','''
+            Q1 += Prescription_attributes[i]
+    query = '''Select '''+Q1+''' from Prescription Ps,Patient P where Ps.Patient_id = P.ID And P.Email='''+"'"+Email+"';"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    print (result)
+    return result
+
+# 2] Retreive From Prescription according to doctor & his Email
+
+def SelecT_ALL_Prescription_Employee(cursor,Email):
+
+    #query = '''Select * from Prescription Ps,Employee E where Ps.Doc_id = E.ID And E.Email='''+"'"+Email+"'"
+    #cursor.execute(query)
+    query = '''Select * from Prescription Ps,Employee E where Ps.Doc_id = E.ID And E.Email=?;'''
+    cursor.execute(query,[Email])
+    result = cursor.fetchall()
+    print (result)
+    return result
+
+def Select_From_Prescription_Employee(cursor,Email,Columns = []):
+
+    Q1 = ''''''
+    if (len(Columns) > 0):
+        Q1 += Prescription_attributes[Columns[0]]
+        for i in range(1,len(Columns)):
+            Q1 += ''','''
+            Q1 += Prescription_attributes[Columns[i]]
+    else:
+        Q1 += Prescription_attributes[2]
+        for i in range(3,len(Prescription_attributes)):
+            Q1 += ''','''
+            Q1 += Prescription_attributes[i]
+    #query = '''Select '''+Q1+''' from Prescription Ps,Employee E where Ps.Doc_id = E.ID And E.Email='''+"'"+Email+"'"
+    #cursor.execute(query)
+    query = '''Select '''+Q1+''' from Prescription Ps,Employee E where Ps.Doc_id = E.ID And E.Email=?'''
+    cursor.execute(query,[Email])
+    result = cursor.fetchall()
+    print (result)
+    return result
+
+# ---------------------------------- Department Queries ------------------------------------------------
+
+def Select_count_Department(cursor):
+
+    query = ''' Select count(*) from Department'''
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+# with order by name
+def select_All_manager_name(cursor):
+    query = '''select E.FNAME,E.lNAME from Department D , Employee E where D.Manager_id = E.ID ORDER BY E.FNAME,E.lNAME ;'''
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+# with order by Department_ID
+def select_All_manager_name(cursor):
+    query = '''select D.ID,E.FNAME,E.lNAME,E.Email from Department D , Employee E where D.Manager_id = E.ID ORDER BY D.ID ;'''
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
+def select_manager_name(cursor,Department_ID):
+    query = '''select E.FNAME,E.lNAME from Department D , Employee E where D.Manager_id = E.ID and D.ID='''+"'"+Department_ID+"'"+''' ORDER BY E.FNAME,E.lNAME ;'''
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+def select_rooms_number(cursor,Department_ID):
+    query = '''select count(*) from Room where Department_ID ='''+ str(Department_ID)
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
+#----------------------- Donations --------------------------
+
+# def select_Donations(cursor):
+#     query = '''select * from Donation ;'''
+#     cursor.execute(query)
+#     result = cursor.fetchall()
+#     return result
+
+def insert_Donar(cursor,BloodType,FNAME,lNAME,Addresscountry,Addresscity,Addressstreet):
+    values = [BloodType,FNAME,lNAME,Addresscountry,Addresscity,Addressstreet]
+    query = '''insert into Doner (BloodType,FNAME,lNAME,Addresscountry,Addresscity,Addressstreet) values (?,?,?,?,?,?);'''
+    try:
+        cursor.execute(query,values)
+        return True
+    except Error as e:
+        print(e)
+        return False
+
+def insert_Donations(cursor,Donation_Date,type,donor):
+    values = [Donation_Date,type,donor]
+    query = '''insert into Donation (DonationDate,DonationType,DonarId) values (?,?,?);'''
+    try:
+        cursor.execute(query,values)
+        return True
+    except Error as e:
+        print(e)
+        return False
+def select_Donations(cursor):
+    query = '''select DonationDate,DonationType from Donation order by DonationDate ;'''
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
+def count_donations(cursor):
+    query = '''select DonationType,count(*) from Donation group by DonationType order by DonationType ;'''
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
     

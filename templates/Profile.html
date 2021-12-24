@@ -51,9 +51,9 @@
                       <p class="text-secondary mb-1">patient</p>
                       {%endif%}
                       <p class="text-muted font-size-sm">{{data["Addresscity"]}},{{ data["Addresscountry"]}}, {{ data["Addressstreet"]}}</p>
-                      <button class="btn btn-primary">Follow</button>
                       {%if data["Group_id"]=="A"%}
-                        <a href="/AdminProfile" method="post" >Settings</a>
+                      <a href="/AdminProfile/Employee" method="post" class="btn btn-primary" >Employees</a>
+                        <a href="/AdminProfile/Department" method="post"class="btn btn-primary"  >Departments</a>
                       {%endif%}
                     </div>
                   </div>
@@ -84,8 +84,8 @@
                 </ul>
               </div>
             </div>
-            {%if edit==1%}
-            <form action="/profile/0" method="post" class="col-md-8">
+            {%if edit=="Edit"%}
+            <form action="/profile/mainprofile" method="post" class="col-md-8">
             <div class="col-md-12">
               <div class="card mb-3">
                 <div class="card-body">
@@ -171,7 +171,7 @@
               </div>
             </form>
               {%else%}
-              <form method="post" action="/profile/1" class="col-md-8" >
+              <form method="post" action="/profile/Edit" class="col-md-8" >
               <div class="col-md-12">
                 <div class="card mb-3">
                   <div class="card-body">
@@ -222,7 +222,7 @@
                     <hr>
                     <div class="row">
                       <div class="col-sm-12">
-                        <input type="submit" class="btn btn-info " value="Edit">
+                        <input type="submit" class="btn btn-info "  value="Edit">
                       </div>
                     </div>
                   </div>

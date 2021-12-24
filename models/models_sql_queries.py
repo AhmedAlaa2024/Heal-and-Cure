@@ -171,4 +171,4 @@ Patient_Status_Table='''CREATE TABLE IF NOT EXISTS PatientStatus
               CONSTRAINT Status_Rel FOREIGN KEY (PatientID) REFERENCES Patient (ID)
               )
               '''
-HOSPITAL_DB_TABLES = [Department_TABLE, Patient_TABLE, Employee_TABLE, Prescription_TABLE, Reservation_TABLE, GlobalContract_TABLE, EmployeeContract_TABLE, PatientContract_TABLE, Room_TABLE, Examination_TABLE,Patient_Status_Table]
+HOSPITAL_DB_TABLES = [Department_TABLE, Patient_TABLE, Employee_TABLE, Prescription_TABLE, Reservation_TABLE, GlobalContract_TABLE, EmployeeContract_TABLE, PatientContract_TABLE, Room_TABLE, Examination_TABLE,DONER_Table,DONATION_TABLE,Patient_Status_Table]

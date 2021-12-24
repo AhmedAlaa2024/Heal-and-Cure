@@ -11,11 +11,37 @@ from config import *
 connection = open_connection("hospital.db")
 cursor = get_cursor(connection)
 Database_Setup(cursor)
+activate_Fks(cursor)
 # =============================================
+# HomePage=Blueprint("Home",__name__)
+# @HomePage.route('/home',methods=["GET"])
+# def mainpage():
+#     return "Alaa and Sabry"
+
+
+
 HomePage=Blueprint("Home",__name__)
-@HomePage.route('/home',methods=["GET"])
+@HomePage.route('/',methods=["GET", "POST"])
+@HomePage.route('/home',methods=["GET", "POST"])
 def mainpage():
-    return "Alaa and Sabry"
+    count = Select_count_Department(cursor)
+    connection.commit()
+    DataDp = selectFromTable(cursor,'Department',Department_attributes,[Deparment.All.value],[])
+    Manager_Data = select_All_manager_name(cursor)
+    Donations = select_Donations(cursor)
+    count =count_donations(cursor)
+    #Admin  = selectFromTable(cursor,'Employee',Employee_attributes,[Employee.All.value],[(Employee.Group_id,'A')])
+    return render_template('HomePage.html',is_loggedin = False,Donations =count,Manager_Data =Manager_Data,data_of_department = DataDp,no_departments = count[0][0],Data=session) # pass your Data here  like Departments & Donations & all other informations
+
+@HomePage.route('/Departments/<ID_Department>',methods=["GET", "POST"])
+def Dapartments(ID_Department):
+    no_rooms = select_rooms_number(cursor,ID_Department)
+    Manager_name = select_manager_name(cursor,ID_Department)
+    Doctors = selectFromTable(cursor,'Employee',Employee_attributes,[Employee.All.value],[(Employee.Group_id.value,'D'),(Employee.D_id.value,ID_Department)])
+    Data_Department = selectFromTable(cursor,'Department',Department_attributes,[Deparment.All.value],[(Deparment.Department_ID.value,ID_Department)])
+    return render_template('Departments.html',is_loggedin = True,Manager_name =Manager_name,Data_Department=Data_Department,Doctors =Doctors,no_rooms =no_rooms[0][0]) # pass your Data here  like Departments & Donations & all other informations
+
+
 #from the signup page
 #TODO:(validations to the input data)
 @HomePage.route("/signup/home",methods=["POST"])

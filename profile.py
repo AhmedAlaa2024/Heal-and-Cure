@@ -2,6 +2,7 @@ from os import abort
 from sqlite3.dbapi2 import Cursor
 from flask import render_template,Blueprint,request, session
 from phonenumbers.phonenumber import PhoneNumber
+from werkzeug.utils import redirect
 from defs import Patient
 from functions import *
 from phonenumbers import geocoder
@@ -28,7 +29,7 @@ connection = open_connection("hospital.db")
 cursor = get_cursor(connection)
 Database_Setup(cursor)
 
-@ProfilePage.route("/profile/<int:id>",methods=["POST","GET"])
+@ProfilePage.route("/profile/<string:id>",methods=["POST","GET"])
 def profile(id):
     if "ID" in session: #Edit page
         if("Group_id" not in session):
@@ -44,9 +45,9 @@ def profile(id):
             session["DoctorName"]="Bolbol"
             session["DATE"]="28-10-2000"
             session["Treatment"]="eb3d 3n alaa"
-        if id==1 and request.method=="POST":
+        if id=="Edit" and request.method=="POST":
             return render_template("Profile.html",edit=id,data=session)
-        elif id==0: #main profile page
+        elif id=="mainprofile": #main profile page
             if request.method=="POST":
                 Fname=request.form.get("Fname")
                 Lname=request.form.get("Lname")
@@ -82,21 +83,99 @@ def profile(id):
             else :
                 return render_template("Profile.html",edit=id,data=session)
         else:
-            return render_template("Profile.html",edit=id,data=session)
+            return redirect("/home")
     else:
         return "login first"
 
 #the profile page of the admin 
 #when the home page is ended i will add a button to the profile page and i will select which route should be called
 #if Group_id==A  
+
+
 @ProfilePage.route("/AdminProfile/<Operation>",methods=["POST","GET"])
 def Admin(Operation):
     if session["Group_id"]=="A":
-        if(Operation=="Departments"):
-            #query to get all ssn of the employees how don't manage adepartment (inner join) and save the ssn in list
-            return render_template("AdminFormEdit.html",SSNList=session,selector=Operation)
-        elif Operation=="Employees":
-            #query to get the list of the departments names
-            return render_template("AdminFormEdit.html",SSNList=session,selector=Operation)
+        if(Operation=="Department"):
+            #query to get the data of the departments
+            Result= selectFromTable(cursor,'Department',Department_attributes,[Deparment.All.value] ,[] )
+            return render_template("ShowDataToAdmin.html",Type=Operation,Data=Result)
+        elif Operation=="Employee":
+            #query to get the data of the employees
+            Result= selectFromTable(cursor,'Employee',Employee_attributes,[Employee.All.value] ,[] )
+            return render_template("ShowDataToAdmin.html",Type=Operation,Data=Result)
+        
     else:
         return "you are not allowed"
+
+#route to insert the Departments by the Admin
+@ProfilePage.route("/AdminProfile/Departments/<string:operation>",methods=["POST","GET"])
+def AdminSettingsDepartments(operation):
+    if session["Group_id"]=="A":
+        if operation=="Insert":
+            return render_template("AdminSettings.html",SSNList=session,Type="Departments",selector=operation)
+    else:
+        return "you are not allowed"
+#route to insert the employees by the Admin
+@ProfilePage.route("/AdminProfile/Employees/<string:operation>",methods=["POST","GET"])
+def AdminSettingsEmployees(operation):
+    if session["Group_id"]=="A":
+        if operation=="Insert":
+            return render_template("AdminSettings.html",SSNList=session,Type="Employees",selector=operation)
+    else:
+        return "you are not allowed"
+#rout to check the data form the Admin
+@ProfilePage.route("/AdminProfile/checkdata/<string:opertaion>",methods=["POST"])
+def AdmincheckoutData():
+    if request.form.get("Departmentname") !=None :
+        #the data of the department
+        Departmentname=request.form.get("Departmentname")
+        Startdate=request.form.get("startDate")
+        Departmentmanager=request.form.get("Manager")
+        DepartmentDes=request.form.get("Descripation")
+        #Bolbol check the data and insert it in the database
+        # if opertaion=="Insert":
+        #     #to insert
+        # else:
+        #     #to insert
+        return redirect("/AdminProfile/Department")
+    else:
+        # the data of the employee
+        Fname=request.form.get("Fname")
+        Lname=request.form.get("Lname")
+        Email=request.form.get("Email")
+        Password=request.form.get("Password")
+        Manager=request.form.get("Manager")
+        Age=request.form.get("Age")
+        PhonNumber=request.form.get("PhonNumber")
+        Addresscountry=request.form.get("Addresscountry")
+        Addressstreet=request.form.get("Addressstreet")
+        #Bolbol check the data and insert it in the database
+        # if opertaion=="Insert":
+        #     #to insert
+        # else:
+        #     #to insert
+        return redirect("/AdminProfile/Employee")
+# route to delete the Departments by using the id
+@ProfilePage.route('/DeleteDepartment/<int:id>')
+def deleteDepartment(id):
+    # query to delete
+    return redirect("/AdminProfile/Department")
+# route to delete the Employees by using the id
+@ProfilePage.route('/DeleteEmployee/<int:id>')
+def deleteEmployee(id):
+    # query to delete
+    return redirect("/AdminProfile/Employee")
+#route to edit the data of the Employees
+@ProfilePage.route('/EditEmployee/<int:id>')
+def EditEmployee(id):
+    # query to get the data of the id
+    employee_Data = selectFromTable(cursor,'Employee',Employee_attributes,[Employee.All.value] ,[(Employee.Employee_ID.value,id)] )
+    return render_template("EditData.html",Type="Employees",SSNList =session,DataEmp=employee_Data)
+    #bolbol get the data and check it
+#route to edit the data of the Departments
+@ProfilePage.route('/EditDepartment/<int:id>')
+def EditDepartment(id):
+    # query to retrive the data of the id
+    department_Data = selectFromTable(cursor,'Department',Department_attributes,[Deparment.All.value] ,[(Deparment.Department_ID.value,id)] )
+    return render_template("EditData.html",Type="Departments",SSNList=session,DataDP=department_Data)
+    #bolbol get the data and check it

@@ -129,8 +129,7 @@ Resrvation_attributes={
     }
 
 ####################################################################################
-Department_attributes = {0:"*",1:"ID",2:"FNAME",3:"lNAME",4:"Manager_id",5:"Start_Date"}
-
+Department_attributes = {0:"*",1:"ID",2:"Department_Name",3:"Manager_id",4:"Start_Date"}
 Patient_attributes = {0:"*",1:"ID",2:"FNAME",3:"lNAME",4:"AGE",5:"Phonecountry"
 ,6:"PhoneNumber",7:"Addresscountry",8:"Addresscity",9:"Addressstreet",10:"GENDER",11:"Email",12:"Password"}
 
@@ -182,10 +181,9 @@ class Patient (enum.Enum):
 class Deparment (enum.Enum):
     All = 0
     Department_ID = 1
-    FNAME = 2
-    lNAME = 3
-    Manager_id = 4
-    Start_Date = 5
+    Department_Name = 2
+    Manager_id = 3
+    Start_Date = 4
 
 class Prescription (enum.Enum):
     All = 0

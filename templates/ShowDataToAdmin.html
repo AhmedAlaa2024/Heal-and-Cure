@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../static/fonts/icomoon/style.css">
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Document</title>
+</head>
+<body>
+  <div style="display: flex;justify-content: center; align-items: center; flex-direction: column; row-gap: 1.5rem;">
+    {%if Type=="Department"%}
+    <h1 class="text-center">The Departments</h1>
+    <table class="table table-hover table-dark" style="width: 80%; margin:auto">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Dpartment name</th>
+            <th scope="col">manager</th>
+            <th scope="col">Start Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for Department in Data%}
+            <tr>
+              <th scope="row">Department[0]</th>
+              <td>{{Department[1]}}</td>
+              <td>{{Department[2]}}</td>
+              <td>{{Department[3]}}</td>
+              <td><a class="btn btn-danger" href="/DeleteDepartment/{{Department[0]}}"><i class="fas fa-trash-alt"></i> Delete</a> <a class="btn btn-success" href="/EditDepartment/{{Department[0]}}"><i class="fas fa-edit"></i>Edit</a> </td>
+            </tr>
+            {%endfor%}
+        </tbody>
+      </table>
+      <a href="/AdminProfile/Departments/Insert" class="btn btn-success">insert Department</a>
+  {%elif Type=="Employee"%}
+  <h1 class="text-center">The Employees</h1>
+  <table class="table table-hover table-dark"style="width: 80%; margin:auto">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">name</th>
+        <th scope="col">Age</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Address</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Email</th>
+        <th scope="col">Password</th>
+        <th scope="col">Join date</th>
+        <th scope="col">Department id</th>
+        <th scope="col">Position</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for employee in Data%}
+      <tr>
+        <th scope="row">{{employee[0]}}</th>
+        <td>{{employee[1]}} {{employee[2]}}</td>
+        <td>{{employee[3]}}</td>
+        <td>{{employee[4]}}{{employee[5]}}</td>
+        <td>{{employee[6]}}/{{employee[7]}}/{{employee[8]}}</td>
+        <td>{{employee[9]}}</td>
+        <td>{{employee[10]}}</td>
+        <td>{{employee[11]}}</td>
+        <td>{{employee[12]}}</td>
+        <td>{{employee[13]}}</td>
+        {%if employee[14]=='D' %}
+        <td>Doctor</td>
+        {%elif employee[14]=='N' %}
+        <td>Nurse</td>
+        {%elif employee[14]=='E'%}
+        <td>Employee</td>
+        {%endif%}
+        <td><a class="btn btn-danger" href="/DeleteEmployee/{{employee[0]}}"><i class="fas fa-trash-alt"></i> Delete</a> <a class="btn btn-success" href="/EditEmployee/{{employee[0]}}"><i class="fas fa-edit"></i>Edit</a> </td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+  <a href="/AdminProfile/Employees/Insert" class="btn btn-success">insert Employee</a>
+  {%endif%}
+  </div>
+  
+</body>
+</html>
