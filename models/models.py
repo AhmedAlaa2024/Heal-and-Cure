@@ -17,19 +17,23 @@ import enum
 # status: Not Tested
 #===================================================================================================
 
-#Columns = [Employee.Age.value,Employee.PhoneNumber.value]
-#Selectors = [(Employee.FNAME.value,"Ahmed"),(Employee.lNAME.value,"Alaa")]
+# Columns = [Employee.Age.value,Employee.PhoneNumber.value]
+# Selectors = [(Employee.FNAME.value,"Ahmed"),(Employee.lNAME.value,"Alaa")]
 
 def selectFromTable(cursor,table_name,table_attributes,Columns,Selectors):
     Q1 = ''''''
     Q2 = ''' Where '''
+
     if(len(Columns) <1):
         return []
+
     for i in range(len(Columns)-1):
         Q1 += table_attributes[Columns[i]]
         Q1 +=","
+
     Q1 += table_attributes[Columns[-1]]
-    if(len(Selectors) <1):
+
+    if(len(Selectors) < 1):
         Q2 =''''''
     else:
         for i in range(len(Selectors)-1):
@@ -37,12 +41,14 @@ def selectFromTable(cursor,table_name,table_attributes,Columns,Selectors):
                 Q2 += table_attributes[Selectors[i][0]] + "="+str(Selectors[i][1])+" AND "
             else:
                  Q2 += table_attributes[Selectors[i][0]] + "='"+Selectors[i][1]+"' AND "
+
         if(isinstance(Selectors[-1][-1], int)):
             Q2 += table_attributes[Selectors[-1][0]] + "="+ str(Selectors[-1][1])
         else:
             Q2 += table_attributes[Selectors[-1][0]] + "='"+ Selectors[-1][1]+"'"
 
     query = 'select '+Q1+' from ' + table_name +Q2+';'
+
     try:
         cursor.execute(query)
         result = cursor.fetchall()

@@ -9,6 +9,7 @@ from phonenumbers import carrier
 import phonenumbers
 from models.models import *
 from config import *
+
 ProfilePage=Blueprint("profile",__name__)
 '''
 I already have the data in the session and i will detect if the user is patient or doctor by using group id
@@ -97,6 +98,5 @@ def Admin(Operation):
         elif Operation=="Employees":
             #query to get the list of the departments names
             return render_template("AdminFormEdit.html",SSNList=session,selector=Operation)
-        
     else:
         return "you are not allowed"
