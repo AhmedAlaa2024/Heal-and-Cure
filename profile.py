@@ -1,4 +1,4 @@
-from os import abort
+import os
 from sqlite3.dbapi2 import Cursor
 from flask import render_template,Blueprint,request, session
 from phonenumbers.phonenumber import PhoneNumber
@@ -10,6 +10,8 @@ from phonenumbers import carrier
 import phonenumbers
 from models.models import *
 from config import *
+
+STATIC_FOLDER = ""
 ProfilePage=Blueprint("profile",__name__)
 '''
 I already have the data in the session and i will detect if the user is patient or doctor by using group id
@@ -81,14 +83,15 @@ def profile(id):
                     return render_template("Profile.html",edit=id,data={"session":session})
             else :
                 session["Group_id"] = selectFromTable(cursor, "Employee", Employee_attributes, [Employee.Group_id.value], [(Employee.Employee_ID.value,session["ID"])])[0][-1]
-                # if (session["Group_id"] != "D"):
-                #     return render_template("Profile.html",edit=id,data={"session":session})
-                # else:
-                data = {
-                    "session": session,
-                    "patients": [patient[1] for patient in zip(range(4),selectFromTable(cursor, "Patient", Patient_attributes, [Patient.FNAME.value, Patient.lNAME.value, Patient.GENDER.value], []))]
-                }
-                return render_template("Profile.html",edit=id,data=data)
+                session["ID"] = str(session["ID"])
+                if (session["Group_id"] == "D"):
+                    data = {
+                        "session": session,
+                        "patients": [patient[1] for patient in zip(range(4),selectFromTable(cursor, "Patient", Patient_attributes, [Patient.FNAME.value, Patient.lNAME.value, Patient.GENDER.value, Patient.Patient_ID.value], []))]
+                    }
+                    return render_template("Profile.html",edit=id,data=data)
+                else:
+                    return render_template("Profile.html",edit=id,data={"session":session})
         else:
             return redirect("/home")
     else:
@@ -186,3 +189,22 @@ def EditDepartment(id):
     department_Data = selectFromTable(cursor,'Department',Department_attributes,[Deparment.All.value] ,[(Deparment.Department_ID.value,id)] )
     return render_template("EditData.html",Type="Departments",SSNList=session,DataDP=department_Data)
     #bolbol get the data and check it
+
+@ProfilePage.route('/employee/<int:employee_id>/patients',methods=["GET"])
+def showAllPatient(employee_id):
+    full_filename = os.path.join(STATIC_FOLDER, 'avatar.jpg')
+    data = {
+                "session": session,
+                "patients": [patient for patient in selectFromTable(cursor, "Patient", Patient_attributes, [Patient.FNAME.value, Patient.lNAME.value, Patient.GENDER.value, Patient.Patient_ID.value], [])],
+                "avatar": full_filename
+            }
+    return render_template("Patients.html", data=data)
+
+@ProfilePage.route('/patient/<int:patient_id>', methods=["GET", "POST"])
+def get_patient(patient_id):
+    patient_data = selectFromTable(cursor, "Patient", Patient_attributes, [Patient.All.value], [(Patient.Patient_ID.value, patient_id)])
+    data = {
+        "session": session,
+        "patient": [entry[1] for entry in zip(range(len(patient_data[0])-1), patient_data[0] )]
+    }
+    return render_template("Profile.html", data=data)
