@@ -55,7 +55,8 @@
                   <p class="text-secondary mb-1">patient</p>
                   {%endif%}
                   <p class="text-muted font-size-sm">{{data["session"]["Addresscity"]}},{{
-                    data["session"]["Addresscountry"]}}, {{data["session"]["Addressstreet"]}}, {{data["session"]["Email"]}}</p>
+                    data["session"]["Addresscountry"]}}, {{data["session"]["Addressstreet"]}},
+                    {{data["session"]["Email"]}}</p>
                   {%if data["session"]["Group_id"]=="A"%}
                   <a href="/AdminProfile/Employee" method="post" class="btn btn-primary">Employees</a>
                   <a href="/AdminProfile/Department" method="post" class="btn btn-primary">Departments</a>
@@ -540,11 +541,11 @@
                 {%endif%}
                 {%endif%}
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                <div class="row">
-                  <div class="col-sm-12">
-                    <input type="submit" class="btn btn-info " value="Show More">
+                  <div class="row">
+                    <div class="col-sm-12">
+                          <input type="submit" class="btn btn-info " value="Show More">
+                    </div>
                   </div>
-                </div>
                 </li>
               </ul>
             </div>
