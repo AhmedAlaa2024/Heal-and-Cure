@@ -53,7 +53,7 @@ def selectFromTable(cursor,table_name,table_attributes,Columns,Selectors):
     try:
         cursor.execute(query)
         result = cursor.fetchall()
-        print(result)
+        # print(result)
         return result
     except Error as e:
         print(e)
