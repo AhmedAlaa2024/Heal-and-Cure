@@ -45,7 +45,7 @@ def profile(id):
             session["DATE"]="28-10-2000"
             session["Treatment"]="eb3d 3n alaa"
         if id=="Edit" and request.method=="POST":
-            return render_template("Profile.html",edit=id,data=session)
+            return render_template("Profile.html",edit=id,data={"session":session})
         elif id=="mainprofile": #main profile page
             if request.method=="POST":
                 Fname=request.form.get("Fname")
@@ -66,21 +66,29 @@ def profile(id):
                         is_upadated = Update(cursor,'Employee',[Employee.Employee_ID.value],[session['ID']],[Employee.FNAME.value,Employee.lNAME.value,Employee.Email.value,Employee.Password.value,Employee.PhoneNumber.value,Employee.Addresscountry.value,Employee.Addresscity.value,Employee.Addressstreet.value],new_info)
                     if is_upadated:
                         connection.commit()
-                        session["Fname"]=Fname
-                        session["Lname"]=Lname
-                        session["Email"]=email
-                        session["password"]=password
-                        session["PhoneNumber"]=phoneNumber
-                        session["Addresscountry"]=Addresscountry
-                        session["Addressstreet"]=Addressstreet
-                        session["Addresscity"]=Addresscity
-                        return render_template("Profile.html",edit=0,data=session)
+                        session["Fname" ] = Fname
+                        session["Lname"] = Lname
+                        session["Email"] = email
+                        session["password"] = password
+                        session["PhoneNumber"] = phoneNumber
+                        session["Addresscountry"] = Addresscountry
+                        session["Addressstreet"] = Addressstreet
+                        session["Addresscity"] = Addresscity
+                        return render_template("Profile.html",edit=0,data={"session":session})
                     else:
-                        return render_template("Profile.html",edit=id,data=session)
+                        return render_template("Profile.html",edit=id,data={"session":session})
                 else :
-                    return render_template("Profile.html",edit=id,data=session)
+                    return render_template("Profile.html",edit=id,data={"session":session})
             else :
-                return render_template("Profile.html",edit=id,data=session)
+                session["Group_id"] = selectFromTable(cursor, "Employee", Employee_attributes, [Employee.Group_id.value], [(Employee.Employee_ID.value,session["ID"])])[0][-1]
+                # if (session["Group_id"] != "D"):
+                #     return render_template("Profile.html",edit=id,data={"session":session})
+                # else:
+                data = {
+                    "session": session,
+                    "patients": [patient[1] for patient in zip(range(4),selectFromTable(cursor, "Patient", Patient_attributes, [Patient.FNAME.value, Patient.lNAME.value, Patient.GENDER.value], []))]
+                }
+                return render_template("Profile.html",edit=id,data=data)
         else:
             return redirect("/home")
     else:
