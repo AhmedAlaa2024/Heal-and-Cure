@@ -33,11 +33,11 @@
               <div class="row">
                 <div class="col-md-6 form-group mb-3">
                   <label for="name" class="col-form-label">Department Name *</label>
-                  <input type="text" class="form-control" name="Departmentname" id="name" placeholder="Your Department Name">
+                  <input type="text" class="form-control" name="Departmentname" id="name" value="{{DataDP[0][1]}}" placeholder="Your Department Name">
                 </div>
                 <div class="col-md-6 form-group mb-3">
                   <label for="StartDate" class="col-form-label">StartDate*</label>
-                  <input type="date" class="form-control" name="StartDate" id="StartDate"  placeholder="Your Start date to the department">
+                  <input type="date" class="form-control" name="StartDate" id="StartDate"value="{{DataDP[0][3]}}"   placeholder="Your Start date to the department">
                 </div>
               </div>
 
@@ -46,7 +46,11 @@
                   <label for="Manager" class="col-form-label">Manager*</label>
                   <select class="custom-select" id="Manager" name="Manager">
                     {% for Employee in SSNList%}
+                    {%if DataDP[0][2]== Employee%}
                       <option selected>{{Employee}}</option>
+                      {%else%}
+                      <option>{{Employee}}</option>
+                      {%endif%}
                     {%endfor%}
                 </select>
                 </div>
@@ -79,7 +83,7 @@
           <div class="row">
             <div class="col-md-6 form-group mb-3">
               <label for="Fname" class="col-form-label"> FName *</label>
-              <input type="text" class="form-control" name="Fname" id="Fname" placeholder="Your Fname">
+              <input type="text" class="form-control" name="Fname" id="Fname"  placeholder="Your Fname">
             </div>
             <div class="col-md-6 form-group mb-3">
               <label for="Lname" class="col-form-label">LName*</label>
