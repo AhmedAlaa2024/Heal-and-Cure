@@ -3,11 +3,15 @@ import os
 from login import LoginPage
 from Home import HomePage
 from SignUp import signupPage
-from profile import ProfilePage
+from profile import ProfilePage, STATIC_FOLDER
 from Logout import LogoutPage
 from werkzeug.utils import redirect
 from utils import *
 from config import *
+
+
+PEOPLE_FOLDER = os.path.join('static', 'images')
+
 connection = open_connection("hospital.db")
 cursor = get_cursor(connection)
 
@@ -21,5 +25,10 @@ app.register_blueprint(LoginPage)
 app.register_blueprint(signupPage)
 app.register_blueprint(ProfilePage)
 app.register_blueprint(LogoutPage)
+
+app.config['UPLOAD_FOLDER'] = PEOPLE_FOLDER
+
+STATIC_FOLDER = app.config['UPLOAD_FOLDER']
+
 if __name__=="__main__":
     app.run(debug=True)

@@ -23,14 +23,16 @@ HomePage=Blueprint("Home",__name__)
 @HomePage.route('/',methods=["GET", "POST"])
 @HomePage.route('/home',methods=["GET", "POST"])
 def mainpage():
-    count = Select_count_Department(cursor)
+    #count = Select_count_Department(cursor)
     connection.commit()
     DataDp = selectFromTable(cursor,'Department',Department_attributes,[Deparment.All.value],[])
     Manager_Data = select_All_manager_name(cursor)
     Donations = select_Donations(cursor)
     count =count_donations(cursor)
-    #Admin  = selectFromTable(cursor,'Employee',Employee_attributes,[Employee.All.value],[(Employee.Group_id,'A')])
-    return render_template('HomePage.html',is_loggedin = False,Donations =count,Manager_Data =Manager_Data,data_of_department = DataDp,no_departments = count[0][0],Data=session) # pass your Data here  like Departments & Donations & all other informations
+    Admin  = selectFromTable(cursor,'Employee',Employee_attributes,[Employee.All.value],[(Employee.Group_id.value,'A')])
+    if(len(Admin) == 0):
+        Admin = [(0,"","")]
+    return render_template('HomePage.html',Principle = Admin,Donations =count,Manager_Data =Manager_Data,data_of_department = DataDp,no_departments = count[0][0],Data=session) # pass your Data here  like Departments & Donations & all other informations
 
 @HomePage.route('/Departments/<ID_Department>',methods=["GET", "POST"])
 def Dapartments(ID_Department):
