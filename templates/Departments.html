@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+     <title>Heal & Cure Departments</title>
+
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="Tooplate">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="{{url_for('static',filename= 'css2/bootstrap.min.css')}}">
+     <link rel="stylesheet" href="{{url_for('static',filename= 'css2/font-awesome.min.css')}}">
+     <link rel="stylesheet" href="{{url_for('static',filename= 'css2/animate.css')}}">
+     <link rel="stylesheet" href="{{url_for('static',filename= 'css2/owl.carousel.css')}}">
+     <link rel="stylesheet" href="{{url_for('static',filename= 'css2/owl.theme.default.min.css')}}">
+     <link rel="stylesheet" href="{{url_for('static',filename= 'css2/tooplate-style2.css')}}">
+     <!-- MAIN CSS -->
+     <link rel="stylesheet" href="css2/tooplate-style.css">
+
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+     <!-- PRE LOADER -->
+     <section class="preloader">
+          <div class="spinner">
+
+               <span class="spinner-rotate"></span>
+               
+          </div>
+     </section>
+
+
+     
+     <!-- MENU -->
+     <section class="navbar navbar-default navbar-static-top" role="navigation">
+          <div class="container">
+
+               <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                    </button>
+
+                    <!-- lOGO TEXT HERE -->
+                    <a href="/home" class="navbar-brand" style="font-size: 20px; color:lightslategrey">
+                         <span style = "background-color:rgb(0, 195, 255); color:white;font-size: 25px;" >H</span>eal & <span style = "background-color:rgb(0, 195, 255);
+                         ; color:white;font-size: 25px;" >C</span>ure
+                   </a>
+               </div>
+
+               <!-- MENU LINKS -->
+               <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                         <li><a href="/home" class="smoothScroll">Home</a></li>
+                         <li><a href="#about" class="smoothScroll">About Department</a></li>
+                         <li><a href="#team" class="smoothScroll">Doctors</a></li>
+                         <li><a href="#news" class="smoothScroll">Reservation</a></li>
+                         <li><a href="#google-map" class="smoothScroll">Contact</a></li>
+                         <!-- <li class="appointment-btn"><a href="#">Make an appointment</a></li> -->
+                         {% if "ID" not in Data%}
+                         <li class="smoothScroll" ><a href="/signup/0">Sign-up</a></li>
+                                                  <!-- Link Sign-up Here -->
+                         <li class="smoothScroll"><a href="/login/0">Login</a></li>
+                                                  <!-- Link login Here -->
+                         {%else%}
+                         <li class="smoothScroll"><a href="/profile/mainprofile"> Profile  </a></li>
+                         <li class="smoothScroll"><a href="/logout"> logout  </a></li>
+                         {%endif%}
+                    </ul>
+               </div>
+
+          </div>
+     </section>
+
+
+     <!-- HOME -->
+
+     <!-- TEAM -->
+     <section id="about">
+        <div class="container">
+             <div class="row">
+               <h2 class="wow fadeInUp" data-wow-delay="0.6s">Welcome to Department {{Data_Department[0][1]}} </h2>
+                  <div class="col-md-6 col-sm-6">
+                       <div class="about-info">
+                            <!-- <div class="wow fadeInUp" data-wow-delay="0.8s">
+                                 <p>Aenean luctus lobortis tellus, vel ornare enim molestie condimentum. Curabitur lacinia nisi vitae velit volutpat venenatis.</p>
+                                 <p>Sed a dignissim lacus. Quisque fermentum est non orci commodo, a luctus urna mattis. Ut placerat, diam a tempus vehicula.</p>
+                            </div> -->
+                              <h3>Manager</h3>
+                              <h5>Dr. {{Manager_name[0][0]}} {{Manager_name[0][1]}}</h5>
+
+                              <h3>Start Date </h3>
+                              <h5>{{Data_Department[0][3]}}</h5>
+                       </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6">
+                    <div class="about-info">
+                        
+                         <!-- <div class="wow fadeInUp" data-wow-delay="0.8s">
+                              <p>Aenean luctus lobortis tellus, vel ornare enim molestie condimentum. Curabitur lacinia nisi vitae velit volutpat venenatis.</p>
+                              <p>Sed a dignissim lacus. Quisque fermentum est non orci commodo, a luctus urna mattis. Ut placerat, diam a tempus vehicula.</p>
+                         </div> -->
+                           <h3>Number of Doctors</h3>
+                           <h5> {{Doctors|length}} Doctors </h5>
+
+                           <h3>Number of Rooms</h3>
+                           <h5>{{no_rooms}} Rooms</h5>
+                    </div>
+               </div>
+                  
+             </div>
+        </div>
+   </section>
+
+     <!-- Departments -->
+     <section id="team" data-stellar-background-ratio="1">
+          <div class="container">
+
+                <!-- Departments From Database -->
+                <div class="col-md-6 col-sm-6">
+                    <div class="about-info">
+                         <h2 class="wow fadeInUp" data-wow-delay="0.1s">Doctors</h2>
+                    </div>
+               </div>
+               <div class="clearfix"></div>
+               
+               <div class="row">
+                    {%if (Doctors|length ==0):%}
+                    <div class="col-md-6 col-sm-6">
+                         <h3>No Doctors in the Department yet</h3>
+                    </div>
+                    {%endif%}
+
+               </div>
+
+               {%if(Doctors|length <=4):%}
+               <div class="row">
+               {%for i in range(0,Doctors|length):%}
+
+                  <div class="col-md-6 col-sm-6">
+                    <div class="team-thumb wow fadeInUp" data-wow-delay="0.1s">
+                         <img src="{{url_for('static',filename = 'img/images/team-image1.jpg')}}" class="img-responsive" alt=""> 
+
+                              <div class="team-info">
+                                   <h3> {{Doctors[i][1]}} {{Doctors[i][2]}}</h3> 
+                                   <!-- Name of Department -->
+                                   <p>{{Doctors[i][13]}}</p>
+                                    <!-- Start Date -->
+
+                                   <div class="team-contact-info">
+                                     <!-- Manger Name  -->
+                                        <p><i class="fa fa-phone"></i> {{Doctors[i][1]}} {{Doctors[i][2]}}</p>
+                                      <!-- Manager Email -->
+                                        <p><i class="fa fa-envelope-o"></i> <a href="#">{{Doctors[i][3]}}     </a></p>
+                                   </div>
+                                   <div class="team-contact-info">
+                                    <!-- Manger Name  -->
+                                       <p><i class="fa fa-phone">{{Doctors[i][4]}}{{Doctors[i][5]}}</i> </p>
+                                     <!-- Manager Email -->
+                                       <p><i class="fa fa-envelope-o"></i> <a href="#">{{Doctors[i][10]}}    </a></p>
+                                  </div>
+                                   <ul class="social-icon">
+                                     <!-- Link Department Page -->
+                                        <li><a href="/doctors/{{Doctors[i][0]}}" class="fa fa-linkedin-square"></a></li>
+                                        <!-- <li><a href="#" class="fa fa-envelope-o"></a></li> -->
+                                   </ul>
+                              </div>
+
+                         </div>
+                    </div>
+                    {%if (i+1) % 2 == 0%}
+                    <div class = "row" style = "color:white"> hi</div>
+                    <br>
+                    {%endif%}
+
+                    {%endfor%}
+
+               </div>
+
+               {%else:%}
+
+               <div class="row">
+
+               {%for i in range(0,4):%}
+
+               <div class="col-md-6 col-sm-6">
+                 <div class="team-thumb wow fadeInUp" data-wow-delay="0.1s">
+                      <img src="{{url_for('static',filename = 'img/images/team-image1.jpg')}}" class="img-responsive" alt="">
+
+                           <div class="team-info">
+                                <h3> {{Doctors[i][1]}} {{Doctors[i][2]}}</h3> 
+                                <!-- Name of Department -->
+                                <p>{{Doctors[i][13]}}</p>
+                                 <!-- Start Date -->
+
+                                <div class="team-contact-info">
+                                  <!-- Manger Name  -->
+                                     <p><i class="fa fa-phone"></i> {{Doctors[i][1]}} {{Doctors[i][2]}}</p>
+                                   <!-- Manager Email -->
+                                     <p><i class="fa fa-envelope-o"></i> <a href="#">{{Doctors[i][3]}}     </a></p>
+                                </div>
+                                <div class="team-contact-info">
+                                 <!-- Manger Name  -->
+                                    <p><i class="fa fa-phone">{{Doctors[i][4]}}{{Doctors[i][5]}}</i> </p>
+                                  <!-- Manager Email -->
+                                    <p><i class="fa fa-envelope-o"></i> <a href="#">{{Doctors[i][10]}}    </a></p>
+                               </div>
+                                <ul class="social-icon">
+                                  <!-- Link Department Page -->
+                                     <li><a href="/doctors/{{Doctors[i][0]}}" class="fa fa-linkedin-square"></a></li>
+                                     <!-- <li><a href="#" class="fa fa-envelope-o"></a></li> -->
+                                </ul>
+                           </div>
+
+                      </div>
+                 </div>
+
+                 {%if (i+1) % 2 == 0%}
+                 <div class = "row" style = "color:white"> hi</div>
+                 <br>
+                 {%endif%}
+               {%endfor%}
+               </div>
+
+               <br>
+                <div id = "btnshow"> 
+                    <div class="row">
+                         <div class="col-md-4 col-sm-6">
+                              </div>
+                         <div class="col-md-4 col-sm-6">
+                              <button id="ShowDoctors" style=" 
+                              position: absolute;
+                              top: 50%;
+                              left: 35%;
+                              font-size: 20px" >ShowMore</button>
+                         </div>
+                         
+                         <div class="col-md-4 col-sm-6">
+                         </div>
+                    </div>
+               </div>
+
+               <div id ="doctorss" style="display: none">
+                    <div class="row"  >
+                         {%for i in range(4,Doctors|length):%}
+     
+                         <div class="col-md-6 col-sm-6">
+                              <div class="team-thumb wow fadeInUp" data-wow-delay="0.1s">
+                                   <img src="{{url_for('static',filename = 'img/images/team-image1.jpg')}}" class="img-responsive" alt=""> 
+          
+                                        <div class="team-info">
+                                             <h3> {{Doctors[i][1]}} {{Doctors[i][2]}}</h3> 
+                                             <!-- Name of Department -->
+                                             <p>{{Doctors[i][13]}}</p>
+                                             <!-- Start Date -->
+          
+                                             <div class="team-contact-info">
+                                             <!-- Manger Name  -->
+                                                  <p><i class="fa fa-phone"></i> {{Doctors[i][1]}} {{Doctors[i][2]}}</p>
+                                             <!-- Manager Email -->
+                                                  <p><i class="fa fa-envelope-o"></i> <a href="#">{{Doctors[i][3]}}     </a></p>
+                                             </div>
+                                             <div class="team-contact-info">
+                                             <!-- Manger Name  -->
+                                             <p><i class="fa fa-phone">{{Doctors[i][4]}}{{Doctors[i][5]}}</i> </p>
+                                             <!-- Manager Email -->
+                                             <p><i class="fa fa-envelope-o"></i> <a href="#">{{Doctors[i][10]}}    </a></p>
+                                             </div>
+                                             <ul class="social-icon">
+                                             <!-- Link Department Page -->
+                                                  <li><a href="/doctors/{{Doctors[i][0]}}" class="fa fa-linkedin-square"></a></li>
+                                                  <!-- <li><a href="#" class="fa fa-envelope-o"></a></li> -->
+                                             </ul>
+                                   </div>
+          
+                              </div>
+                         </div>
+                         {%if (i+1) % 2 == 0%}
+                         <div class = "row" style = "color:white"> hi</div>
+                         <br>
+                         {%endif%}
+                         {%endfor%}
+                    </div>
+               </div>
+               
+               
+                         <br>
+                         <div id = "btnhide" style="display: none"> 
+                              <div class="row">
+                                   <div class="col-md-4 col-sm-6">
+                                        </div>
+                                   <div class="col-md-4 col-sm-6">
+                                        <button id="HideDoctors" style=" 
+                                        position: absolute;
+                                        top: 50%;
+                                        left: 35%;
+                                        font-size: 20px" >ShowLess</button>
+                                   </div>
+                                   
+                                   <div class="col-md-4 col-sm-6">
+                                   </div>
+                              </div>
+                         </div>
+
+               {%endif%}    
+               <!-- </div> -->
+
+
+               <!-- </div> -->
+          </div>
+     </section>
+
+
+{%if "Group_id" not in session %}
+<section id="appointment" data-stellar-background-ratio="3">
+     <div class="container">
+          <div class="row">
+
+               <div class="col-md-6 col-sm-6">
+                    <img src="{{url_for('static',filename = 'img/images/appointment-image.jpg')}}" class="img-responsive" alt="">
+               </div>
+
+               <div class="col-md-6 col-sm-6">
+                    <!-- CONTACT FORM HERE -->
+                    <form id="appointment-form" role="form" method="post" action="/Departments/{{current_department_id}}">
+
+                         <!-- SECTION TITLE -->
+                         <div class="section-title wow fadeInUp" data-wow-delay="0.4s">
+                              <h2>Make an Appointment</h2>
+                         </div>
+
+                         <div class="wow fadeInUp" data-wow-delay="0.8s">
+                              <div class="col-md-6 col-sm-6">
+                                   <label for="name">Reservation Type</label>
+                                   <select name="type" class="form-control">
+                                        <option value="A-">Appointment with doctor</option>
+                                        <option value="O-">Operation</option>
+                                   </select>
+                              </div>
+
+                              <div class="col-md-6 col-sm-6">
+                                   <label for="date">Select Date</label>
+                                   <input name="appointment" type="date" name="date" value="" class="form-control">
+                              </div>
+
+                              <div class="col-md-6 col-sm-12">
+                                   <label for="select">Select Doctor</label>
+                                   <select name="doctor_id" class="form-control">
+                                        {% for doctor in Doctors %}
+                                        {% set doctor_name = doctor[1]|string + " " + doctor[2]|string %}
+                                        {% set doctor_id = doctor[0] %}
+                                        <option value={{doctor_id}}>{{doctor_name}}</option>
+                                        {% endfor %}
+                                   </select>
+                              </div>
+
+                              <div class="col-md-12 col-sm-12">
+                                   <button type="submit" class="form-control" id="cf-submit" name="submit">Submit</button>
+                              </div>
+                         </div>
+
+                   </form>
+               </div>
+
+          </div>
+     </div>
+</section>
+{% endif %}
+
+     <!-- GOOGLE MAP -->
+     <section id="google-map">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d6908.61726520026!2d31.21158416930707!3d30.02800230197527!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2seg!4v1639835418121!5m2!1sen!2seg" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+     </section>           
+
+
+     <!-- FOOTER -->
+     <footer data-stellar-background-ratio="5">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-6 col-sm-6">
+                         <div class="footer-thumb"> 
+                              <h4 class="wow fadeInUp" data-wow-delay="0.4s">Contact Info</h4>
+                              <p>you Can comunicate with our staff with Phone or by Email below.</p>
+
+                              <div class="contact-info">
+                                   <p><i class="fa fa-phone"></i> 010-070-0170</p>
+                                   <p><i class="fa fa-envelope-o"></i> <a href="#">Heal&Cure@company.com</a></p>
+                              </div>
+                         </div>
+                    </div>
+
+
+                    <div class="col-md-6 col-sm-6"> 
+                         <div class="footer-thumb">
+                              <div class="opening-hours">
+                                   <h4 class="wow fadeInUp" data-wow-delay="0.4s">Opening Hours</h4>
+                                   <p>Sunday - thursday <span>06:00 AM - 10:00 PM</span></p>
+                                   <p>Saturday <span>09:00 AM - 08:00 PM</span></p>
+                                   <p>Friday <span>Closed</span></p>
+                              </div> 
+
+                              <ul class="social-icon">
+                                   <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
+                                   <li><a href="#" class="fa fa-twitter"></a></li>
+                                   <li><a href="#" class="fa fa-instagram"></a></li>
+                              </ul>
+                         </div>
+                    </div> 
+                    
+               </div>
+          </div>
+     </footer>
+
+     <!-- SCRIPTS -->
+     <script src="{{url_for('static',filename = 'js2/jquery.js')}}"></script>
+     <script src="{{url_for('static',filename = 'js2/bootstrap.min.js')}}"></script>
+     <script src="{{url_for('static',filename = 'js2/jquery.sticky.js')}}"></script>
+     <script src="{{url_for('static',filename = 'js2/jquery.stellar.min.js')}}"></script>
+     <script src="{{url_for('static',filename = 'js2/wow.min.js')}}"></script>
+     <script src="{{url_for('static',filename = 'js2/smoothscroll.js')}}"></script>
+     <script src="{{url_for('static',filename = 'js2/owl.carousel.min.js')}}"></script>
+     <script src="{{url_for('static',filename = 'js2/custom.js')}}"></script>
+     <script src="{{url_for('static',filename = 'js2/show_and_hide2.js')}}"></script>
+     <!-- <script src="js/bootstrap.min.js"></script>
+     <script src="js/jquery.sticky.js"></script>
+     <script src="js/jquery.stellar.min.js"></script>
+     <script src="js/wow.min.js"></script>
+     <script src="js/smoothscroll.js"></script>
+     <script src="js/owl.carousel.min.js"></script>
+     <script src="js/custom.js"></script> -->
+
+</body>
+</html>
