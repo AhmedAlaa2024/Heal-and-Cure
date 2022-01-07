@@ -1,1 +1,0 @@
-start cmd.exe /c "python .\app.py"
