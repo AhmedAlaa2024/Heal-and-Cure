@@ -58,7 +58,7 @@ def profile(id):
             DataOfUser=selectFromTable(cursor,"Patient",Patient_attributes,[Patient.All.value],[(Patient.Patient_ID.value,session['ID'])])
         else:
             DataOfUser=selectFromTable(cursor,"Employee",Employee_attributes,[Employee.All.value],[(Employee.Employee_ID.value,session['ID'])])
-            patients = [patient[1] for patient in zip(range(4),selectFromTable(cursor, "Patient", Patient_attributes, [Patient.Patient_ID.value , Patient.FNAME.value, Patient.lNAME.value, Patient.GENDER.value], []))]
+            # patients = [patient[1] for patient in zip(range(4),selectFromTable(cursor, "Patient", Patient_attributes, [Patient.Patient_ID.value , Patient.FNAME.value, Patient.lNAME.value, Patient.GENDER.value], []))]
         session["Fname"]                =DataOfUser[0][1]
         session["Lname"]                =DataOfUser[0][2]
         session["Age"]                  =DataOfUser[0][3]
@@ -70,7 +70,7 @@ def profile(id):
         session["Addressstreet"]        =DataOfUser[0][8]
         session["Addresscity"]          =DataOfUser[0][7]
         session["image"]                =DataOfUser[0][12]
-        print(session)
+        # print(session)
         if id=="Edit" and request.method=="GET":
             return render_template("Profile.html",edit=id,data=Data,data1=session,patients=patients,Session_id=session["ID"])
         elif id=="mainprofile": #main profile page
@@ -339,6 +339,7 @@ def Show_my_patients(patient_id):
         Data["DATE"]=result2[0][1]
         Data["Treatment"]=result2[0][2]
     data = {
+        "ID": patient[0],
         "Fname": patient[1],
         "Lname": patient[2],
         "Age": patient[3],
@@ -384,6 +385,58 @@ def Show_doctor(doctor_id):
         "Group_id":doctor[14]
     }
     return render_template("Profile.html",edit=0, data1=Data,Session_id=session["ID"])
+
+@ProfilePage.route('/patients/<int:patient_id>', methods=["POST"])
+def add_prescription(patient_id):
+    doctor_id = session["ID"]
+    prescriptions = select_doctor_prescription(cursor, patient_id, doctor_id)
+    patient = selectFromTable(cursor, "Patient", Patient_attributes, [Patient.All.value],[(Patient.Patient_ID.value,patient_id)])[0]
+    data = {
+        "ID": patient[0],
+        "Fname": patient[1],
+        "Lname": patient[2],
+        "Age": patient[3],
+        "PhoneNumber": patient[5],
+        "Addresscountry": patient[6],
+        "Addresscity": patient[7],
+        "Addressstreet": patient[8],
+        "Gender": patient[9],
+        "Email": patient[10]
+    }
+
+    Data={}
+    result3= selectFromTable(cursor,"PatientStatus",PatientStatus_attributes,[PatientStatus.All.value],[(PatientStatus.Patient_ID.value,patient_id)])
+    result2=SelecT_ALL_Prescription_Patient_sorted_by_date(cursor,patient_id)
+    print(result2)
+    if len(result3)!=0:
+        Data["disease1"]=result3[0][1]
+        Data["disease2"]=result3[0][2]
+        Data["disease3"]=result3[0][3]
+        Data["disease4"]=result3[0][4]
+        Data["disease5"]=result3[0][5]
+        
+    if len(result2)!=0:
+        Data["DoctorName"]=result2[0][0]
+        Data["DATE"]=result2[0][1]
+        Data["Treatment"]=result2[0][2]
+
+    illness = request.form.get("illness")
+    treatment = request.form.get("treatment")
+
+    reservation = select_reservation(cursor, doctor_id, patient_id)
+    is_inserted = insert_general(cursor, "Prescription", Prescription_attributes, [Prescription.All.value], [get_time_now_as_text(), illness, treatment, reservation[0]])
+    connection.commit()
+    print("#####################################################################")
+    print("Ahmed Alaa is debugging here! Watch Out!!!")
+    print("Illness:", illness)
+    print("Treatment:", treatment)
+    print("Reservation:", reservation[0])
+    print("is_inserted:", is_inserted)
+    print("#####################################################################")
+    if (is_inserted):
+        return render_template("profile.html", data1=data,data=Data,Doctor=1)
+    else:
+        return "Error 404"
 
 
 # @ProfilePage.route("takePhoto")

@@ -50,7 +50,7 @@ Prescription_TABLE = '''CREATE TABLE IF NOT EXISTS Prescription
          Illness        CHAR(50)     NOT NULL,
          Treatment      TEXT     NOT NULL,
          Reservation_id INT      NOT NULL,
-         CONSTRAINT Prescription_Reservation FOREIGN KEY (Reservation_id) REFERENCES Rervation (ID)
+         CONSTRAINT Prescription_Reservation FOREIGN KEY (Reservation_id) REFERENCES Reservation (ID)
          )'''
 #reservation table
 # there are three relationships (prescription,patient,room)

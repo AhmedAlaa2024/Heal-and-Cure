@@ -112,7 +112,7 @@ Donation_attributes={
 }
 class Reservation(enum.Enum):
     All=0
-    ID=1
+    Reservation_ID=1
     Date=2
     Appointment=3
     state=4
