@@ -253,11 +253,12 @@
                 </div>
               </div>
             {%if Doctor==1%}
-              <form action="" style="display: flex;
+            {% set route_2 = "/patients/" + data1["ID"]|string %}
+            <form id="prescription-form" role="form" method="post" action="/patients/{{data1['ID']}}" style="display: flex;
               flex-direction: column;
               row-gap: 10px;
               position: absolute;
-              top:70%;
+              top:56%;
               width: 509px;
               left: 37%;
               background-color: white;

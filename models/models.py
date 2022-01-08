@@ -397,3 +397,40 @@ def selectEmployeesExceptAdmin(cursor):
     cursor.execute(query)
     result=cursor.fetchall()
     return result
+
+# 1] Retreive From Prescription according to Patient & his Email {Can be General not only Email}
+# Before insertion  we must Check Doc_ID is for Doctor Group_ID = 'D'
+
+def select_patients_reservation_doctor(cursor,doctor_id,type):
+    query = '''Select DISTINCT P.ID,P.FNAME,P.lNAME,P.AGE,P.Phonecountry,P.PhoneNumber,P.Addresscountry,P.Addresscity,P.Addressstreet,P.GENDER,P.Email,P.Password,P.image 
+    from Patient P , Reservation R  where P.ID=R.Patient_id and R.Doctor_id='''+ str(doctor_id)+''' And R.Type="'''+type+'''";'''
+    cursor.execute(query)
+    result = cursor.fetchall()
+    # print (result)
+    return result    
+
+def select_reservation(cursor,doctor_id,patient_id):
+    query = '''Select R.ID from Reservation R  where R.Patient_id=''' +str(patient_id) + ''' and R.Doctor_id='''+ str(doctor_id)+''' order by R.Date;'''
+    cursor.execute(query)
+    result = cursor.fetchall()
+    # print (result)
+    return result[-1]
+
+# ------------------------- Prescription --------------------------------------
+# 1] Retreive From Prescription according to Patient & his Email {Can be General not only Email}
+# Before insertion  we must Check Doc_ID is for Doctor Group_ID = 'D'
+
+def select_patient_prescription(cursor,patient_id):
+    query = '''Select Ps.ID,Ps.DATE,Ps.Illness,Ps.Treatment,Ps.Reservation_id, R.Doctor_id from Prescription Ps,Reservation R where Ps.Reservation_id=R.ID and  R.Patient_id ='''+str(patient_id)+''' group by Ps.Reservation_id,R.Doctor_id;'''
+    cursor.execute(query)
+    result = cursor.fetchall()
+    # print (result)
+    return result
+
+def select_doctor_prescription(cursor,patient_id,doctor_id):
+    query = '''Select Ps.ID,Ps.DATE,Ps.Illness,Ps.Treatment,Ps.Reservation_id from Prescription Ps,Reservation R where Ps.Reservation_id=R.ID and  R.Patient_id ='''
+    query+= str(patient_id)+''' and R.Doctor_id =''' +str(doctor_id)+''';'''
+    cursor.execute(query)
+    result = cursor.fetchall()
+    # print (result)
+    return result
