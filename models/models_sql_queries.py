@@ -20,7 +20,7 @@ Patient_TABLE = '''CREATE TABLE IF NOT EXISTS Patient
          Addressstreet        CHAR(50)  NOT NULL,
          GENDER         CHAR(1)   NOT NULL,
          Email          CHAR(50)  NOT NULL UNIQUE,
-         Password       CHAR(50)  NOT NULL,
+         Password       CHAR(200)  NOT NULL,
          image  CHAR(250) )'''
 #employee table
 Employee_TABLE = '''CREATE TABLE IF NOT EXISTS Employee
@@ -35,7 +35,7 @@ Employee_TABLE = '''CREATE TABLE IF NOT EXISTS Employee
          Addressstreet        CHAR(50)  NOT NULL,
          GENDER         CHAR(1)   NOT NULL,
          Email          CHAR(50)  NOT NULL UNIQUE,
-         Password       CHAR(50)  NOT NULL ,
+         Password       CHAR(200)  NOT NULL ,
          image          CHAR(250),
          JoinDate       VARCHAR(18) DEFAULT '00:00AM,00/00/0000',
          D_id           INT,

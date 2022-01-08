@@ -6,6 +6,7 @@ from phonenumbers import carrier
 import phonenumbers
 from models.models import *
 from config import *
+import bcrypt
 #open the connection
 connection = open_connection("hospital.db")
 cursor = get_cursor(connection)
@@ -111,6 +112,14 @@ def SignupHome():
                 # take the variables
                 #////////////////////////////////////////////////////////////
                 password=request.form.get("password")
+                # Ahmed Alaa Edited here (Start)
+                hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+                password = hashed_password.decode('utf-8')
+                print("###################################################################################")
+                print("Ahmed Alaa is debugging here right now! Watch Out!!")
+                print("Password: ", password.decode('utf-8'))
+                print("###################################################################################")
+                # Ahmed Alaa Edited here (End)
                 email=request.form.get("email")
                 Fname=request.form.get('Fname')
                 Lname=request.form.get('Lname')
@@ -125,7 +134,7 @@ def SignupHome():
                     #the query of the insert
                     # and then store the data in the session 
                     Columns = [Patient.All.value]
-                    Values =[Fname, Lname, 20 ,PhoneCountry,  str(phoneNumber), AddressCountry, AddressCity, AddressStreet, "M", email, password]
+                    Values =[Fname, Lname, 20 ,PhoneCountry,  str(phoneNumber), AddressCountry, AddressCity, AddressStreet, "M", email, password, "NULL"]
                     is_added = insert_general(cursor,'Patient',Patient_attributes,Columns,Values)
                     if(is_added):
                         connection.commit()
@@ -145,13 +154,23 @@ def LoginHome():
                 #if the data is not correct the will direct to the login ag
                 password=request.form.get("password")
                 email=request.form.get("email")
-                result1= selectFromTable(cursor,"Patient",Patient_attributes,[Patient.All.value],[(Patient.Email.value,email),(Patient.Password.value,password)])
+                result1= selectFromTable(cursor,"Patient",Patient_attributes,[Patient.All.value],[(Patient.Email.value,email)])
                 result2= selectFromTable(cursor,"Employee",Employee_attributes,[Employee.All.value],[(Employee.Email.value,email),(Employee.Password.value,password)])
+                # print("###################################################################################")
+                # print("Ahmed Alaa is debugging here right now! Watch Out!!")
+                # hashed_password = result1[0][11]
+                # hashed_password = hashed_password.encode('utf-8')
+                # print("Password: ", bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()))
+                # print("stored Password: ", hashed_password)
+                # print("###################################################################################")
                 #using the session to store the data of the current user
                 if len(result1)!=0:#take the complete data
-                    session['ID']           =result1[0][0]
-                    session["Email"]        =email
-                    return redirect("/home")
+                    # Ahmed Alaa Edited here! (Start)
+                    if bcrypt.checkpw(password.encode('utf-8'), result1[0][11].encode('utf-8')):
+                    # Ahmed Alaa Edited here! (End)
+                        session['ID']           =result1[0][0]
+                        session["Email"]        =email
+                        return redirect("/home")
                 elif len(result2)!=0:
                     session['ID']           =result2[0][0]
                     session['Group_id']     =result2[0][15]

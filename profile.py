@@ -59,6 +59,7 @@ def profile(id):
         else:
             DataOfUser=selectFromTable(cursor,"Employee",Employee_attributes,[Employee.All.value],[(Employee.Employee_ID.value,session['ID'])])
             # patients = [patient[1] for patient in zip(range(4),selectFromTable(cursor, "Patient", Patient_attributes, [Patient.Patient_ID.value , Patient.FNAME.value, Patient.lNAME.value, Patient.GENDER.value], []))]
+            patients = [patient[1] for patient in zip(range(4),select_patients_reservation_doctor(cursor, session['ID']))]
         session["Fname"]                =DataOfUser[0][1]
         session["Lname"]                =DataOfUser[0][2]
         session["Age"]                  =DataOfUser[0][3]
