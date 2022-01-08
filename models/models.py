@@ -434,3 +434,11 @@ def select_doctor_prescription(cursor,patient_id,doctor_id):
     result = cursor.fetchall()
     # print (result)
     return result
+
+def select_patients_reservation_doctor(cursor,doctor_id):
+    query = '''Select DISTINCT P.ID,P.FNAME,P.lNAME,P.AGE,P.Phonecountry,P.PhoneNumber,P.Addresscountry,P.Addresscity,P.Addressstreet,P.GENDER,P.Email,P.Password,P.image 
+    from Patient P , Reservation R  where P.ID=R.Patient_id and R.Doctor_id='''+ str(doctor_id)+''' And R.Type like "A%" ;'''
+    cursor.execute(query)
+    result = cursor.fetchall()
+    print (result)
+    return result
