@@ -31,4 +31,4 @@ app.config['UPLOAD_FOLDER'] = PEOPLE_FOLDER
 STATIC_FOLDER = app.config['UPLOAD_FOLDER']
 
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run()
