@@ -46,7 +46,7 @@ def profile(id):
             # the query to get the status
             result3= selectFromTable(cursor,"PatientStatus",PatientStatus_attributes,[PatientStatus.All.value],[(PatientStatus.Patient_ID.value,session['ID'])])
             result2=SelecT_ALL_Prescription_Patient_sorted_by_date(cursor,session["ID"])
-            print(result2)
+            # print(result2)
             if len(result3)!=0:
                 Data["disease1"]=result3[0][1]
                 Data["disease2"]=result3[0][2]
@@ -74,7 +74,7 @@ def profile(id):
         session["Addressstreet"]        =DataOfUser[0][8]
         session["Addresscity"]          =DataOfUser[0][7]
         session["image"]                =DataOfUser[0][12]
-        print(session)
+        # print(session)
         if id=="Edit" and request.method=="GET":
             return render_template("Profile.html",edit=id,data=Data,data1=session,patients=patients,Session_id=session["ID"])
         elif id=="mainprofile": #main profile page
@@ -275,14 +275,14 @@ def AdmincheckoutDataforInsert():
             new_info=[Fname,Lname,Age,PhoneCountry,PhonNumber,Addresscountry,Addresscity,Addressstreet,Gender,Email,Password,"None",str(joinDate),Department_ID,GroupID]
         else :
             return redirect("/error")  #'wrong data'           
-        #Bolbol check the data and insert it in the database
+        # Bolbol check the data and insert it in the database
         insert_general(cursor,'Employee',Employee_attributes,[Employee.All.value],new_info)
         connection.commit()
         return redirect("/AdminProfile/Employee")
 ########################################################################################################
 @ProfilePage.route("/AdminProfile/checkdata/Edit/<int:ID>",methods=["POST"])
 def AdmincheckoutDataforEdit(ID):
-    print("from the edit")
+    # print("from the edit")
     if request.form.get("Departmentname") !=None and request.method== "POST" :
         #the data of the department
         Departmentname=request.form.get("Departmentname")
@@ -295,7 +295,7 @@ def AdmincheckoutDataforEdit(ID):
             Departmentname=department_Data[0][1]
         Employee_joinDate =getJoinDateOfEmployee(cursor,Departmentmanager)
         DepartmentNames=getDepartmentnames(cursor,department_Data[0][1])
-        print(DepartmentNames)
+        # print(DepartmentNames)
         for i in range(len(DepartmentNames)):
             if Departmentname in DepartmentNames[i]: 
                 return "there is department has the same name"
@@ -407,7 +407,7 @@ def add_prescription(patient_id):
     Data={}
     result3= selectFromTable(cursor,"PatientStatus",PatientStatus_attributes,[PatientStatus.All.value],[(PatientStatus.Patient_ID.value,patient_id)])
     result2=SelecT_ALL_Prescription_Patient_sorted_by_date(cursor,patient_id)
-    print(result2)
+    # print(result2)
     if len(result3)!=0:
         Data["disease1"]=result3[0][1]
         Data["disease2"]=result3[0][2]
@@ -485,9 +485,9 @@ def error():
 def setPhoto():
     photo=request.files["image"]
     if photo.mimetype[6:] in AllowedExtaions :
-        print(photo)
+        # print(photo)
         secure_filename(photo.filename)
-        print(photo.mimetype)
+        # print(photo.mimetype)
         if "Group_id" not in session:
             photo.filename="patient"+str(session["ID"])+photo.filename
             # add filename to patient of ID
@@ -498,7 +498,7 @@ def setPhoto():
             Update(cursor,"Employee",[Employee.Employee_ID.value] ,[session["ID"]],[Employee.image.value] ,['"'+photo.filename+'"'] )
             connection.commit()
             #Update(cursor,TableName,SelectingAttributes,SelectingAttributesValues,UpdatedAttributes,UpdatedAttributesValues)
-        print (os.path.join(UPLOAD_FOLDER,photo.filename))
+        # print (os.path.join(UPLOAD_FOLDER,photo.filename))
         photo.save(os.path.join(UPLOAD_FOLDER,photo.filename))
         return redirect("/profile/mainprofile")
     else:
