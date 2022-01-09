@@ -1,0 +1,298 @@
+{%extends "layout/nav.html"%}
+{%block includes%}
+    <meta charset="utf-8">
+    
+    <!--====== Title ======-->
+    <title>Dashboard</title>
+    
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--====== Favicon Icon ======-->
+    <link rel="stylesheet" href="{{url_for('static',filename= 'assets/images/favicon.png')}}" type="image/png">
+        
+    <!--====== Magnific Popup CSS ======-->
+    <link rel="stylesheet" href="{{url_for('static',filename= 'assets/css/magnific-popup.css')}}">
+        
+    <!--====== Slick CSS ======-->
+    <link rel="stylesheet" href="{{url_for('static',filename= 'assets/css/slick.css')}}">
+        
+    <!--====== Line Icons CSS ======-->
+    <link rel="stylesheet" href="{{url_for('static',filename= 'assets/css/LineIcons.css')}}">
+        
+    <!--====== Bootstrap CSS ======-->
+    <link rel="stylesheet" href="{{url_for('static',filename= 'assets/css/bootstrap.min.css')}}">
+    
+    <!--====== Default CSS ======-->
+    <link rel="stylesheet" href="{{url_for('static',filename= 'assets/css/default.css')}}">
+    
+    <!--====== Style CSS ======-->
+    <link rel="stylesheet" href="{{url_for('static',filename= 'assets/css/style1.css')}}">
+
+    <link rel="stylesheet" href="{{url_for('static',filename= 'css/Graphs.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename= 'css2/bootstrap.min.css')}}">
+     <link rel="stylesheet" href="{{url_for('static',filename= 'css2/font-awesome.min.css')}}">
+     <link rel="stylesheet" href="{{url_for('static',filename= 'css2/animate.css')}}">
+     <link rel="stylesheet" href="{{url_for('static',filename= 'css2/owl.carousel.css')}}">
+     <link rel="stylesheet" href="{{url_for('static',filename= 'css2/owl.theme.default.min.css')}}">
+     <link rel="stylesheet" href="{{url_for('static',filename= 'css2/tooplate-style.css')}}">
+     
+     <link rel="stylesheet" href="css2/tooplate-style.css">
+    <script src="{{url_for('static',filename= 'graphs.js')}}"></script>
+{%endblock%}
+
+<body>
+    
+    <!--====== PRELOADER PART START ======-->
+
+    <div class="preloader">
+        <div class="loader">
+            <div class="ytp-spinner">
+                <div class="ytp-spinner-container">
+                    <div class="ytp-spinner-rotator">
+                        <div class="ytp-spinner-left">
+                            <div class="ytp-spinner-circle"></div>
+                        </div>
+                        <div class="ytp-spinner-right">
+                            <div class="ytp-spinner-circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--====== PRELOADER PART ENDS ======-->
+    
+    <!--====== NAVBAR TWO PART START ======-->
+    {%block navbar%}
+     <section class="navbar navbar-default navbar-static-top"style="background-color:white" role="navigation">
+          <div class="container"style="flex-wrap: nowrap ; ">
+  
+               <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                    </button>
+  
+                    <!-- lOGO TEXT HERE -->
+                    <a href="/home" class="navbar-brand" style="font-size: 20px; color:lightslategrey">
+                        <span style = "background-color:hsl(71deg 70% 45%); color:white;font-size: 25px;" >H</span>eal & <span style = "background-color:hsl(71deg 70% 45%);
+                        ; color:white;font-size: 25px;" >C</span>ure
+                  </a>
+               </div>
+  
+               <!-- MENU LINKS -->
+               <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right" style="display: flex;
+                    flex-direction: row;">
+                         <li><a href="/home" class="smoothScroll">Home</a></li>
+                         <li><a href="/AdminProfile/Patient" class="smoothScroll"><i class="fas fa-user-injured" style="color: #026df3;
+                            margin-right: 10px;"></i>Patients</a></li>
+                         <li class="smoothScroll"><a href="/AdminProfile/Department"><i class="fas fa-users" style="color: #026df3;
+                            margin-right: 10px;"></i> Departments  </a></li>
+                         <li class="smoothScroll"><a href="/AdminProfile/Employee"> <i class="fas fa-user-md" style="color: #026df3;
+                            margin-right: 10px;"></i>Employees  </a></li>  
+                         <li class="smoothScroll"><a href="/AdminProfile/Donation"><i class="fas fa-hand-holding-usd"  style="color: #026df3;
+                            margin-right: 10px;"></i> Donations  </a></li>   
+                            <li class="smoothScroll"><a href="/profile/mainprofile"><i class="fas fa-user" style="color: #026df3;
+                                margin-right: 10px;"></i> Profile  </a></li>
+                             <li class="smoothScroll"><a href="/logout"> <i class="fas fa-sign-out-alt" style="color: #026df3;
+                                margin-right: 10px;"></i>logout  </a></li>                   
+                    </ul>
+               </div>
+  
+          </div>
+     </section>
+     {%endblock%}
+  {%block content%}
+
+                        
+    <!--====== NAVBAR TWO PART ENDS ======-->
+    
+    <!--====== SLIDER PART START ======-->
+
+    <section id="home" class="slider_area">
+        <div id="carouselThree" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselThree" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselThree" data-slide-to="1"></li>
+                <li data-target="#carouselThree" data-slide-to="2"></li>
+            </ol>
+
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="slider-content">
+                                    <h1 class="title">The details of each section</h1>
+                                    <p class="text">We introduce also the details of each section,You can see the details of each section.</p>
+                                </div>
+                            </div>
+                        </div> <!-- row -->
+                    </div> <!-- container -->
+                    <div class="slider-image-box d-none d-lg-flex align-items-end">
+                        <div class="slider-image">
+                            <img src="{{url_for('static',filename= 'assets/images/slider/1.png')}}" alt="Hero">
+                        </div> <!-- slider-imgae -->
+                    </div> <!-- slider-imgae box -->
+                </div> <!-- carousel-item -->
+
+                <div class="carousel-item">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="slider-content">
+                                    <h1 class="title">Statistics of Hospital</h1>
+                                    <p class="text">We introduce three sections of statistics </p>
+                                </div> <!-- slider-content -->
+                            </div>
+                        </div> <!-- row -->
+                    </div> <!-- container -->
+                    <div class="slider-image-box d-none d-lg-flex align-items-end">
+                        <div class="slider-image">
+                            <img src="{{url_for('static',filename= 'assets/images/slider/3.png')}}" alt="Hero">
+                        </div> <!-- slider-imgae -->
+                    </div> <!-- slider-imgae box -->
+                </div> <!-- carousel-item -->
+            </div>
+
+            <a class="carousel-control-prev" href="#carouselThree" role="button" data-slide="prev">
+                <i class="lni lni-arrow-left"></i>
+            </a>
+            <a class="carousel-control-next" href="#carouselThree" role="button" data-slide="next">
+                <i class="lni lni-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!--====== SLIDER PART ENDS ======-->
+    
+    <!--====== FEATRES TWO PART START ======-->
+
+    <section id="services" class="features-area">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-10">
+                    <div class="section-title text-center pb-10">
+                        <h3 class="title">Our Services</h3>
+                        <p class="text">Stop wasting time and money designing and managing a website that doesn’t get results. Happiness guaranteed!</p>
+                    </div> <!-- row -->
+                </div>
+            </div> <!-- row -->
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-7 col-sm-9">
+                    <div class="single-features mt-40">
+                        <div class="donut-chart-block block"> 
+                            <h2 class="titular">Number of Doctors of each department</h2>
+                            <div class="donut-chart">
+                              {%for i in range(number1)%}
+                              <div id="{{i}}" id="porcion3" class="recorte"><div id="{{i+360}}" class="quesito ios"></div></div>
+                              <script>
+                                setlocations("{{Data1[i]}}","{{Data1[i+1]-Data1[i]}}","{{i}}","{{i+360}}")
+                              </script>
+                              {%endfor%}        
+                                </div>
+                                <ul class="os-percentages horizontal-list">
+                                  {%for i in range(number1)%}
+                                    <li>
+                                      <script>  
+                                        setColor("{{i+360}}")
+                                      </script>
+                                        <p class="os">{{Depart1[i]}}</p>
+                                        <p class="os-percentage">{{(Data1[i+1]-Data1[i])*100/360}}<sup>%</sup></p>
+                                    </li>
+                                  {%endfor%}
+                                </ul>
+                          </div>
+                        
+                    </div> <!-- single features -->
+                </div>
+                <div class="col-lg-4 col-md-7 col-sm-9">
+                    <div class="single-features mt-40">
+                        <div class="donut-chart-block block"> 
+                            <h2 class="titular">Number of patients of each Doctor</h2>
+                            <div class="donut-chart">
+                              {%for i in range(number2)%}
+                              <div id="{{i+720}}" id="porcion3" class="recorte"><div id="{{i+1080}}" class="quesito ios"></div></div>
+                              <script>
+                                setlocations("{{Data2[i]}}","{{Data2[i+1]-Data2[i]}}","{{i+720}}","{{i+1080}}")
+                              </script>
+                              {%endfor%}
+                              <p class="center-date"><br><span class="scnd-font-color"></span></p>        
+                                </div>
+                                <ul class="os-percentages horizontal-list">
+                                  {%for i in range(number2)%}
+                                    <li>
+                                        <p class="os">{{Doct[i]}}</p>
+                                        <p class="os-percentage">{{(Data2[i+1]-Data2[i])*100/360}}<sup>%</sup></p>
+                                    </li>
+                                  {%endfor%}
+                                </ul>
+                          </div>
+                        
+                    </div> <!-- single features -->
+                </div>
+                <div class="col-lg-4 col-md-7 col-sm-9">
+                    <div class="single-features mt-40">
+                        <div class="donut-chart-block block"> 
+                            <h2 class="titular">Number of patients of each Department</h2>
+                            <div class="donut-chart">
+                              {%for i in range(number3)%}
+                              <div id="{{i+1440}}" id="porcion3" class="recorte"><div id="{{i+1800}}" class="quesito ios"></div></div>
+                              <script>
+                                setlocations("{{Data3[i]}}","{{Data3[i+1]-Data3[i]}}","{{i+1440}}","{{i+1800}}")
+                              </script>
+                              {%endfor%}
+                              <p class="center-date"><br><span class="scnd-font-color"></span></p>        
+                                </div>
+                                <ul class="os-percentages horizontal-list">
+                                  {%for i in range(number3)%}
+                                    <li>
+                                        <p class="os">{{Depart2[i]}}</p>
+                                        <p class="os-percentage">{{(Data3[i+1]-Data3[i])*100/360}}<sup>%</sup></p>
+                                    </li>
+                                  {%endfor%}
+                                </ul>
+                          </div>
+                        
+                    </div> <!-- single features -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </section>
+
+    <!--====== FEATRES TWO PART ENDS ======-->
+    
+<!--====== Jquery js ======-->
+<script src="{{url_for('static',filename= 'assets/js/vendor/jquery-1.12.4.min.js')}}"></script>
+<script src="{{url_for('static',filename= 'assets/js/vendor/modernizr-3.7.1.min.js')}}"></script>
+
+<!--====== Bootstrap js ======-->
+<script src="{{url_for('static',filename= 'assets/js/popper.min.js')}}"></script>
+<script src="{{url_for('static',filename= 'assets/js/bootstrap.min.js')}}"></script>
+
+<!--====== Slick js ======-->
+<script src="{{url_for('static',filename= 'assets/js/slick.min.js')}}"></script>
+
+<!--====== Magnific Popup js ======-->
+<script src="{{url_for('static',filename= 'assets/js/jquery.magnific-popup.min.js')}}"></script>
+
+<!--====== Ajax Contact js ======-->
+<script src="{{url_for('static',filename= 'assets/js/ajax-contact.js')}}"></script>
+
+<!--====== Isotope js ======-->
+<script src="{{url_for('static',filename= 'assets/js/imagesloaded.pkgd.min.js')}}"></script>
+<script src="{{url_for('static',filename= 'assets/js/isotope.pkgd.min.js')}}"></script>
+
+<!--====== Scrolling Nav js ======-->
+<script src="{{url_for('static',filename= 'assets/js/jquery.easing.min.js')}}"></script>
+<script src="{{url_for('static',filename= 'assets/js/scrolling-nav.js')}}"></script>
+
+<!--====== Main js ======-->
+<script src="{{url_for('static',filename= 'assets/js/main.js')}}"></script>
+
+{%endblock%}
+
