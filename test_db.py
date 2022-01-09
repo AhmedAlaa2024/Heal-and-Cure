@@ -49,7 +49,7 @@ cursor = get_cursor(connection)
 #result2 = SelecT_ALL_Prescription_Patient(cursor,'ahmedsabry232348@gmail.com')
 #connection.commit()
 Doctors = selectFromTable(cursor,'Employee',Employee_attributes,[Employee.All.value],[(Employee.Group_id.value,'D'),(Employee.D_id.value,1)])
-print(Doctors)
+# print(Doctors)
 #result = Select_From_Prescription_Employee(cursor,'ahmedsabry232345.com2024@gmail.com',[])
 connection.commit()
 
