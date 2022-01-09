@@ -71,23 +71,23 @@ def make_donation():
         Values = [bloodtype,DonorFname,DonorLname,DonorEmail,Donorphone]
         is_added = insert_general(cursor,"Doner",Donor_attributes,Columns,Values)
         connection.commit()
-        print (is_added)
+        # print (is_added)
         Columns = [Donor.Donor_ID.value]
         Values = [(Donor.Donor_Blood_Type.value,bloodtype),(Donor.Donor_Fname.value,DonorFname),
         (Donor.Donor_Lname.value,DonorLname),(Donor.Donor_Email.value,DonorEmail),(Donor.Donor_phonenumber.value,Donorphone)]
         donor_id = selectFromTable(cursor,"Doner",Donor_attributes,Columns,Values)
-        print(donor_id)
+        # print(donor_id)
         Columns = [Donation.All.value]
         Values = [get_time_now_as_text(),donationtype,donor_id[0][0],"W"]
         is_added = insert_general(cursor,"Donation" ,Donation_attributes,Columns,Values)
         connection.commit()
-        print (is_added)
+        # print (is_added)
 
     return redirect("/home")
 
 @HomePage.route('/Departments/<ID_Department>',methods=["GET"])
 def Dapartments(ID_Department):
-    #no_rooms = select_rooms_number(cursor,ID_Department)
+    # no_rooms = select_rooms_number(cursor,ID_Department)
     Manager_name = select_manager_name(cursor,ID_Department)
     Doctors = selectFromTable(cursor,'Employee',Employee_attributes,[Employee.All.value],[(Employee.Group_id.value,'D'),(Employee.D_id.value,ID_Department)])
     Data_Department = selectFromTable(cursor,'Department',Department_attributes,[Deparment.All.value],[(Deparment.Department_ID.value,ID_Department)])
