@@ -4,7 +4,8 @@ signupPage=Blueprint("SignUp",__name__)
 @signupPage.route('/signup', methods=['GET'])
 def signup():
     if request.method == 'GET':
-        try:
-            return render_template("SignUP.html")
-        except:
-            return 500
+        return render_template("SignUp.html")
+        # try:
+        #   return render_template("SignUP.html")
+        # except:
+        #    return 500
