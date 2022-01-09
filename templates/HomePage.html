@@ -259,7 +259,7 @@
     
                       <div class="col-md-4 col-sm-6">
                         <div class="team-thumb wow fadeInUp" data-wow-delay="0.2s">
-                         {%if (data_of_department[i][4] != None) :%}
+                         {%if (data_of_department[i][4] != "None") :%}
                          <img src="/static/images/{{data_of_department[i][4]}}" class="img-responsive" alt="">
                          {%else:%}
                          <img src="{{url_for('static',filename = 'img/images/team-image1.jpg')}}" class="img-responsive" alt="">
